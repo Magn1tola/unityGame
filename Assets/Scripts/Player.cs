@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float speed = 10;
     [SerializeField] private float jumpHeight = 5;
+    [SerializeField] private float damage = 1;
 
 
     private float cooldown = 1;
@@ -26,7 +27,7 @@ public class Player : MonoBehaviour
         boxCollider2D = GetComponent<BoxCollider2D>();
         hpController = GetComponent<HPController>();
 
-        HPController.OnApplyDamage += ApplyDamage;
+        hpController.OnApplyDamage += ApplyDamage;
     }
 
     private void Update()
@@ -43,8 +44,10 @@ public class Player : MonoBehaviour
         isFalling = !IsGrounded();
         animator.SetBool("isFalling", isFalling);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.W))
             Jump();
+        if (Input.GetKeyDown(KeyCode.Space))
+            Attack();
     }
 
     private void FixedUpdate()
@@ -105,5 +108,23 @@ public class Player : MonoBehaviour
 
         rigidBody2D.velocity = new Vector2(0f, 0f);
         rigidBody2D.AddForce(transform.right * direction * 2f + transform.up * 5f, ForceMode2D.Impulse);
+    }
+
+    private void Attack()
+    {
+        animator.SetTrigger("Attack");
+        float attackDistance = 1f;
+        Vector2 startposition = new Vector2(boxCollider2D.bounds.center.x + boxCollider2D.size.x, boxCollider2D.bounds.center.y);
+        RaycastHit2D[] raycastHits2D = Physics2D.BoxCastAll(startposition, boxCollider2D.bounds.size, 0f, Vector2.right, attackDistance);
+
+        foreach (RaycastHit2D hit in raycastHits2D)
+        {
+            if (hit.collider.gameObject == gameObject)
+                continue;
+
+            if (hit.collider.gameObject.TryGetComponent(out IDamage damageable))
+                damageable.ApplyDamage(damage, gameObject);
+        }
+
     }
 }

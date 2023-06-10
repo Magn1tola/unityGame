@@ -6,7 +6,13 @@ public class HPController : MonoBehaviour, IDamage
     private float currentHp;
 
     public delegate void AcceptedDamage(float damage, GameObject instigator);
-    public static event AcceptedDamage OnApplyDamage;
+    public event AcceptedDamage OnApplyDamage;
+
+    public delegate void AcceptedHealPoints(float damage, GameObject instigator);
+    public event AcceptedHealPoints OnHealed;
+
+    public delegate void Deaded(float damage, GameObject instigator);
+    public event Deaded OnDead;
 
 
     void Start()
