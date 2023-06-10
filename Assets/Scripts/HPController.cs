@@ -54,6 +54,6 @@ public class HPController : MonoBehaviour, IDamage, IHeal
         if (currentHp > 0)
             return;
 
-        OnDead();
+        // OnDead();
     }
 }
