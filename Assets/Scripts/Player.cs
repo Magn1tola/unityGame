@@ -1,74 +1,116 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamage
 {
-    private Rigidbody2D rigidbody2D;
+    private Rigidbody2D rigidBody2D;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private BoxCollider2D boxCollider2D;
 
     [SerializeField] private float speed = 10;
     [SerializeField] private float jumpHeight = 5;
-    [SerializeField] private float fallingThreshold = -0;
+    [SerializeField] private float maxHp = 3;
 
-    [SerializeField] private int maxHp = 3;
 
-    private int curHp;
+    private float cooldown = 1;
+    private float currentCooldown = 0;
+    private float currentHp;
+    private float fallingThreshold = 1;
     private bool isFalling = false;
+    private bool blockInput = false;
 
 
     private void Start()
     {
-        rigidbody2D = GetComponent<Rigidbody2D>();
+        rigidBody2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider2D = GetComponent<BoxCollider2D>();
-        curHp = maxHp;
+
+        currentHp = maxHp;
     }
 
     private void Update()
     {
 
-        isFalling = (rigidbody2D.velocity.y < fallingThreshold);
-        animator.SetBool("isFalling", isFalling);
+        if (currentCooldown > 0)
+        {
+            currentCooldown -= Time.deltaTime;
+            blockInput = true;
+        }
+        else
+            blockInput = false;
 
+        isFalling = !IsGrounded();
+        animator.SetBool("isFalling", isFalling);
 
         if (Input.GetKeyDown(KeyCode.Space))
             Jump();
+    }
+
+    private void FixedUpdate()
+    {
         if (Input.GetAxis("Horizontal") != 0)
             MoveX(Input.GetAxis("Horizontal"));
     }
 
-    private void FixedUpdate() { }
-
     private void MoveX(float direction) // Функция говно полное ПЕРЕДЕЛАТЬ
     {
-        rigidbody2D.velocity = new Vector2(direction * speed, rigidbody2D.velocity.y);
-        animator.SetFloat("speed", Mathf.Abs(rigidbody2D.velocity.x));
+        if (blockInput)
+            return;
+
+        rigidBody2D.velocity = new Vector2(direction * speed, rigidBody2D.velocity.y);
+        animator.SetFloat("speed", Mathf.Abs(rigidBody2D.velocity.x));
+
         Flip();
     }
 
 
     private void Jump()
     {
-        if (!IsGrounded())
+        if (!IsGrounded() || blockInput)
             return;
 
-        rigidbody2D.AddForce(transform.up * jumpHeight, ForceMode2D.Impulse);
+        rigidBody2D.AddForce(transform.up * jumpHeight, ForceMode2D.Impulse);
         animator.SetTrigger("Jump");
     }
 
     private void Flip()
     {
-        if (rigidbody2D.velocity.x > 0)
+        if (rigidBody2D.velocity.x > 0)
             spriteRenderer.flipX = false;
-        else if (rigidbody2D.velocity.x < 0)
+        else if (rigidBody2D.velocity.x < 0)
             spriteRenderer.flipX = true;
     }
 
     private bool IsGrounded()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(boxCollider2D.bounds.center, 1f);
+        Vector2 circlePosition = new Vector2(boxCollider2D.bounds.center.x, boxCollider2D.bounds.center.y - (boxCollider2D.size.y * transform.lossyScale.y / 2f));
+        float circleRadius = boxCollider2D.size.x * transform.lossyScale.x / 2f;
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(circlePosition, circleRadius);
         return colliders.Length > 1;
+    }
+
+    public void ApplyDamage(float damage, GameObject instigator)
+    {
+        if (damage <= 0)
+            return;
+
+        currentHp -= damage;
+
+        float direction;
+        if (instigator.transform.position.x > gameObject.transform.position.x)
+            direction = -1f;
+        else
+            direction = 1f;
+
+        currentCooldown = cooldown;
+
+        rigidBody2D.velocity = new Vector2(0f, 0f);
+        rigidBody2D.AddForce(transform.right * direction * 2f + transform.up * 5f, ForceMode2D.Impulse);
+
+
+
+        Debug.Log(currentHp);
     }
 }
