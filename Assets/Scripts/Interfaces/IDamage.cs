@@ -1,5 +1,5 @@
 using UnityEngine;
-
-interface IDamage{
+interface IDamage
+{
     void ApplyDamage(float damage, GameObject instigator);
 }

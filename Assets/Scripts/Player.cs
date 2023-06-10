@@ -1,21 +1,19 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour, IDamage
+public class Player : MonoBehaviour
 {
     private Rigidbody2D rigidBody2D;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private BoxCollider2D boxCollider2D;
+    private HPController hpController;
 
     [SerializeField] private float speed = 10;
     [SerializeField] private float jumpHeight = 5;
-    [SerializeField] private float maxHp = 3;
 
 
     private float cooldown = 1;
     private float currentCooldown = 0;
-    private float currentHp;
-    private float fallingThreshold = 1;
     private bool isFalling = false;
     private bool blockInput = false;
 
@@ -26,8 +24,9 @@ public class Player : MonoBehaviour, IDamage
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider2D = GetComponent<BoxCollider2D>();
+        hpController = GetComponent<HPController>();
 
-        currentHp = maxHp;
+        HPController.OnApplyDamage += ApplyDamage;
     }
 
     private void Update()
@@ -91,12 +90,10 @@ public class Player : MonoBehaviour, IDamage
         return colliders.Length > 1;
     }
 
-    public void ApplyDamage(float damage, GameObject instigator)
+    private void ApplyDamage(float damage, GameObject instigator)
     {
         if (damage <= 0)
             return;
-
-        currentHp -= damage;
 
         float direction;
         if (instigator.transform.position.x > gameObject.transform.position.x)
@@ -108,9 +105,5 @@ public class Player : MonoBehaviour, IDamage
 
         rigidBody2D.velocity = new Vector2(0f, 0f);
         rigidBody2D.AddForce(transform.right * direction * 2f + transform.up * 5f, ForceMode2D.Impulse);
-
-
-
-        Debug.Log(currentHp);
     }
 }
