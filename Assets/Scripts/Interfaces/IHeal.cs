@@ -1,3 +1,3 @@
 interface IHeal{
-    public ApplyHeal(float hp);
+    public void ApplyHeal(float hp);
 }
