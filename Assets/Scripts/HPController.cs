@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HPController : MonoBehaviour, IDamage
+public class HPController : MonoBehaviour, IDamage, IHeal
 {
     [SerializeField] private float maxHp = 3;
     private float currentHp;
@@ -8,10 +8,10 @@ public class HPController : MonoBehaviour, IDamage
     public delegate void AcceptedDamage(float damage, GameObject instigator);
     public event AcceptedDamage OnApplyDamage;
 
-    public delegate void AcceptedHealPoints(float damage, GameObject instigator);
+    public delegate void AcceptedHealPoints(float hp);
     public event AcceptedHealPoints OnHealed;
 
-    public delegate void Deaded(float damage, GameObject instigator);
+    public delegate void Deaded();
     public event Deaded OnDead;
 
 
@@ -27,8 +27,6 @@ public class HPController : MonoBehaviour, IDamage
 
     public void ApplyDamage(float damage, GameObject instigator)
     {
-        Debug.Log(damage);
-
         if (currentHp < damage)
             currentHp = 0;
         else
@@ -40,11 +38,22 @@ public class HPController : MonoBehaviour, IDamage
         OnApplyDamage(damage, instigator);
     }
 
+    public void ApplyHeal(float hp)
+    {
+        if (maxHp < hp + currentHp)
+        {
+            currentHp = maxHp;
+        }
+        else
+            currentHp += hp;
+        OnHealed(hp);
+    }
+
     private void Dead()
     {
-        if (currentHp != 0)
+        if (currentHp > 0)
             return;
 
-        Debug.Log("dead");
+        OnDead();
     }
 }
