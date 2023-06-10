@@ -49,11 +49,11 @@ public class HPController : MonoBehaviour, IDamage, IHeal
         OnHealed(hp);
     }
 
-    private void Dead()
+    public void Dead()
     {
         if (currentHp > 0)
             return;
 
-        // OnDead();
+        OnDead();
     }
 }

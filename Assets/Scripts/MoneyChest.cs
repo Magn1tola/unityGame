@@ -18,7 +18,7 @@ public class MoneyChest : MonoBehaviour
 
     private void Open(float damage, GameObject instigator)
     {
-        if (isOpened)
+        if (isOpened && !instigator.TryGetComponent<Player>(out Player Player))
             return;
 
         isOpened = true;

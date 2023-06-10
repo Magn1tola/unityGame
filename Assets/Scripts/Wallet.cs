@@ -12,7 +12,6 @@ public class Wallet : MonoBehaviour, IWallet
             return;
 
         money += count;
-        Debug.Log(money);
     }
 
 }

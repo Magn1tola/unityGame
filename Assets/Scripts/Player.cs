@@ -1,16 +1,15 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Wallet))]
+public class Player : BaseCharacter
 {
-    private Rigidbody2D rigidBody2D;
     private Animator animator;
-    private SpriteRenderer spriteRenderer;
-    private BoxCollider2D boxCollider2D;
-    private HPController hpController;
+    private Wallet wallet;
 
     [SerializeField] private float speed = 10;
     [SerializeField] private float jumpHeight = 5;
-    [SerializeField] private float damage = 1;
 
 
     private float cooldown = 1;
@@ -19,15 +18,11 @@ public class Player : MonoBehaviour
     private bool blockInput = false;
 
 
-    private void Start()
+    protected override void Start()
     {
-        rigidBody2D = GetComponent<Rigidbody2D>();
+        base.Start();
         animator = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        boxCollider2D = GetComponent<BoxCollider2D>();
-        hpController = GetComponent<HPController>();
-
-        hpController.OnApplyDamage += ApplyDamage;
+        wallet = GetComponent<Wallet>();
     }
 
     private void Update()
@@ -77,14 +72,6 @@ public class Player : MonoBehaviour
         animator.SetTrigger("Jump");
     }
 
-    private void Flip()
-    {
-        if (rigidBody2D.velocity.x > 0)
-            spriteRenderer.flipX = false;
-        else if (rigidBody2D.velocity.x < 0)
-            spriteRenderer.flipX = true;
-    }
-
     private bool IsGrounded()
     {
         Vector2 circlePosition = new Vector2(boxCollider2D.bounds.center.x, boxCollider2D.bounds.center.y - (boxCollider2D.size.y * transform.lossyScale.y / 2f));
@@ -93,38 +80,22 @@ public class Player : MonoBehaviour
         return colliders.Length > 1;
     }
 
-    private void ApplyDamage(float damage, GameObject instigator)
+    protected override void ApplyDamage(float damage, GameObject instigator)
     {
-        if (damage <= 0)
-            return;
-
-        float direction;
-        if (instigator.transform.position.x > gameObject.transform.position.x)
-            direction = -1f;
-        else
-            direction = 1f;
-
-        currentCooldown = cooldown;
-
-        rigidBody2D.velocity = new Vector2(0f, 0f);
-        rigidBody2D.AddForce(transform.right * direction * 2f + transform.up * 5f, ForceMode2D.Impulse);
+        base.ApplyDamage(damage, instigator);
     }
 
-    private void Attack()
+    protected override void Attack()
     {
+        base.Attack();
         animator.SetTrigger("Attack");
-        float attackDistance = 1f;
-        Vector2 startposition = new Vector2(boxCollider2D.bounds.center.x + boxCollider2D.size.x, boxCollider2D.bounds.center.y);
-        RaycastHit2D[] raycastHits2D = Physics2D.BoxCastAll(startposition, boxCollider2D.bounds.size, 0f, Vector2.right, attackDistance);
-
-        foreach (RaycastHit2D hit in raycastHits2D)
-        {
-            if (hit.collider.gameObject == gameObject)
-                continue;
-
-            if (hit.collider.gameObject.TryGetComponent(out IDamage damageable))
-                damageable.ApplyDamage(damage, gameObject);
-        }
-
     }
+
+    protected override void Dead()
+    {
+        base.Dead();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+    }
+
+
 }
