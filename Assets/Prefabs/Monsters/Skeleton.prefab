@@ -14,8 +14,7 @@ GameObject:
   - component: {fileID: 428585250685102358}
   - component: {fileID: 9142718332217806206}
   - component: {fileID: 6240407072838631012}
-  - component: {fileID: 821236985946808347}
-  - component: {fileID: 5715878234596384827}
+  - component: {fileID: 6941402917445458168}
   m_Layer: 7
   m_Name: Skeleton
   m_TagString: Untagged
@@ -36,7 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7341006021217142864
 SpriteRenderer:
@@ -186,7 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 3
---- !u!114 &821236985946808347
+--- !u!114 &6941402917445458168
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -198,18 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12f93afa0ac289c4b8b5f216f71790fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDistance: 1
+  attackDistance: 2
   damage: 1
---- !u!114 &5715878234596384827
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 979045839316561228}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84a2d5f5cf1c5e448a446d4e92d8b8be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nodeList: []
+  moveSpeed: 3
+  cooldownTime: 5
