@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 30729719}
   - component: {fileID: 30729718}
   m_Layer: 0
-  m_Name: Button_Continue
+  m_Name: ContinueButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 531898509}
   - component: {fileID: 531898508}
   m_Layer: 0
-  m_Name: Text_Reset
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -510,7 +510,7 @@ GameObject:
   - component: {fileID: 836684600}
   - component: {fileID: 836684599}
   m_Layer: 0
-  m_Name: Text_Continue
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -590,7 +590,7 @@ GameObject:
   - component: {fileID: 1071260983}
   - component: {fileID: 1071260982}
   m_Layer: 0
-  m_Name: Menu_Paused
+  m_Name: Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -667,7 +667,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1292657045}
-  - component: {fileID: 1292657044}
+  - component: {fileID: 1292657046}
   m_Layer: 0
   m_Name: MenuManager
   m_TagString: Untagged
@@ -675,20 +675,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1292657044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1292657043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da4092a5593fef84e89fface3e03b630, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menuPaused: {fileID: 1071260980}
-  keyMenuPaused: 27
 --- !u!4 &1292657045
 Transform:
   m_ObjectHideFlags: 0
@@ -704,6 +690,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1292657046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292657043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4092a5593fef84e89fface3e03b630, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menu: {fileID: 1071260980}
+  keyForPause: 27
 --- !u!1 &1425450421
 GameObject:
   m_ObjectHideFlags: 0
@@ -820,7 +820,7 @@ GameObject:
   - component: {fileID: 1521308395}
   - component: {fileID: 1521308394}
   m_Layer: 0
-  m_Name: Button_MainMenu
+  m_Name: MenuButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -941,7 +941,7 @@ GameObject:
   - component: {fileID: 1559628187}
   - component: {fileID: 1559628186}
   m_Layer: 0
-  m_Name: Text_Pause
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1021,7 +1021,7 @@ GameObject:
   - component: {fileID: 1646632676}
   - component: {fileID: 1646632675}
   m_Layer: 0
-  m_Name: Text_MainMenu
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1102,7 +1102,7 @@ GameObject:
   - component: {fileID: 2135064749}
   - component: {fileID: 2135064748}
   m_Layer: 0
-  m_Name: Button_Reset
+  m_Name: ResetButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
