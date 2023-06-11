@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 9142718332217806206}
   - component: {fileID: 6240407072838631012}
   - component: {fileID: 821236985946808347}
-  - component: {fileID: 379854821238528306}
-  - component: {fileID: 7268116472813020085}
+  - component: {fileID: 5715878234596384827}
+  - component: {fileID: 4623837043111382022}
   m_Layer: 7
   m_Name: Skeleton
   m_TagString: Untagged
@@ -123,8 +123,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.5, y: 1}
+  m_Offset: {x: 0.10491689, y: -0.016644532}
+  m_Size: {x: 0.7317205, y: 1.592891}
   m_Direction: 0
 --- !u!95 &428585250685102358
 Animator:
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDistance: 1
   damage: 1
---- !u!114 &379854821238528306
+--- !u!114 &5715878234596384827
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -213,9 +213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84a2d5f5cf1c5e448a446d4e92d8b8be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodeList:
-  - {fileID: 7268116472813020085}
---- !u!114 &7268116472813020085
+  nodeList: []
+--- !u!114 &4623837043111382022
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
