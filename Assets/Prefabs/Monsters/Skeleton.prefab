@@ -10,10 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 8874458483043254929}
   - component: {fileID: 7341006021217142864}
+  - component: {fileID: 2097229405489689432}
   - component: {fileID: 428585250685102358}
   - component: {fileID: 9142718332217806206}
   - component: {fileID: 6240407072838631012}
   - component: {fileID: 821236985946808347}
+  - component: {fileID: 379854821238528306}
+  - component: {fileID: 7268116472813020085}
   m_Layer: 7
   m_Name: Skeleton
   m_TagString: Untagged
@@ -88,6 +91,41 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!70 &2097229405489689432
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 979045839316561228}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.5, y: 1}
+  m_Direction: 0
 --- !u!95 &428585250685102358
 Animator:
   serializedVersion: 5
@@ -163,3 +201,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDistance: 1
   damage: 1
+--- !u!114 &379854821238528306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 979045839316561228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84a2d5f5cf1c5e448a446d4e92d8b8be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeList:
+  - {fileID: 7268116472813020085}
+--- !u!114 &7268116472813020085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 979045839316561228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76ffd2d3df1be4c41826f929bece78e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

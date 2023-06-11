@@ -25,7 +25,7 @@ public class Player : BaseCharacter
 		if (Input.GetKeyDown(KeyCode.Space)) Attack();
 	}
 
-	public override bool IsGrounded() => Mathf.Abs(rigidBody2D.velocity.y) < 0.05F;
+	public override bool IsGrounded() => Mathf.Abs(rigidBody2D.velocity.y) < 0.02F;
 
 	protected override void ApplyDamage(float damage, GameObject instigator)
 	{
