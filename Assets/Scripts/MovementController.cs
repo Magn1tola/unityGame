@@ -19,6 +19,15 @@ public class MovementController : MonoBehaviour
 		_animator = GetComponent<Animator>();
 	}
 
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.W) && _player.IsGrounded())
+		{
+			_rigidbody2D.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
+			_animator.SetTrigger(Jump);
+		}
+	}
+
 	private void FixedUpdate()
 	{
 		var moveX = Input.GetAxis("Horizontal");
@@ -30,12 +39,6 @@ public class MovementController : MonoBehaviour
 			_animator.SetFloat(Speed, Mathf.Abs(velocity.x));
 
 			_player.Flip();
-		}
-
-		if (Input.GetKeyDown(KeyCode.W) && _player.IsGrounded())
-		{
-			_rigidbody2D.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
-			_animator.SetTrigger(Jump);
 		}
 	}
 }
