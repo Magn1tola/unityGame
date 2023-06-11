@@ -1,12 +1,12 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(CapsuleCollider2D))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(HPController))]
 public class BaseCharacter : MonoBehaviour
 {
-    protected BoxCollider2D boxCollider2D;
+    protected CapsuleCollider2D capsuleCollider2D;
     protected Rigidbody2D rigidBody2D;
     protected SpriteRenderer spriteRenderer;
     private HPController hpController;
@@ -20,7 +20,7 @@ public class BaseCharacter : MonoBehaviour
     {
         rigidBody2D = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        boxCollider2D = GetComponent<BoxCollider2D>();
+        capsuleCollider2D = GetComponent<CapsuleCollider2D>();
         hpController = GetComponent<HPController>();
 
         hpController.OnApplyDamage += ApplyDamage;
@@ -29,8 +29,8 @@ public class BaseCharacter : MonoBehaviour
     }
     public virtual bool IsGrounded()
     {
-        Vector2 circlePosition = new Vector2(boxCollider2D.bounds.center.x, boxCollider2D.bounds.center.y - (boxCollider2D.size.y * transform.lossyScale.y / 2f));
-        float circleRadius = boxCollider2D.size.x * transform.lossyScale.x / 2f;
+        Vector2 circlePosition = new Vector2(capsuleCollider2D.bounds.center.x, capsuleCollider2D.bounds.center.y - (capsuleCollider2D.size.y * transform.lossyScale.y / 2f));
+        float circleRadius = capsuleCollider2D.size.x * transform.lossyScale.x / 2f;
         Collider2D[] colliders = Physics2D.OverlapCircleAll(circlePosition, circleRadius);
         return colliders.Length > 1;
     }
@@ -54,8 +54,8 @@ public class BaseCharacter : MonoBehaviour
     protected virtual void Attack()
     {
         float attackDirection = (spriteRenderer.flipX) ? -1f : 1f;
-        Vector2 startposition = new Vector2(boxCollider2D.bounds.center.x + boxCollider2D.size.x * attackDirection, boxCollider2D.bounds.center.y);
-        RaycastHit2D[] raycastHits2D = Physics2D.BoxCastAll(startposition, boxCollider2D.bounds.size, 0f, Vector2.right * attackDirection, attackDistance);
+        Vector2 startposition = new Vector2(capsuleCollider2D.bounds.center.x + capsuleCollider2D.size.x * attackDirection, capsuleCollider2D.bounds.center.y);
+        RaycastHit2D[] raycastHits2D = Physics2D.BoxCastAll(startposition, capsuleCollider2D.bounds.size, 0f, Vector2.right * attackDirection, attackDistance);
 
         foreach (RaycastHit2D hit in raycastHits2D)
         {
