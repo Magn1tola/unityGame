@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class Skeleton : BaseCharacter
+public class Skeleton : BaseAI
 {
     private Animator animator;
 
@@ -14,7 +14,7 @@ public class Skeleton : BaseCharacter
 
     private void Update()
     {
-
+        
     }
     protected override void ApplyDamage(float damage, GameObject instigator)
     {
