@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 8299714909316348466}
   - component: {fileID: 4685300694038870954}
   - component: {fileID: 5273622489813436747}
+  - component: {fileID: 4591030723223484432}
   m_Layer: 0
   m_Name: PF Village Props - Chest Golden
   m_TagString: Untagged
@@ -118,7 +119,7 @@ Transform:
   m_Children:
   - {fileID: 3615272710834565069}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6491913702539827632
 Animator:
@@ -198,8 +199,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4853b16870eeea246a302457653c4014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinsCount: 5
-  coinPrefab: {fileID: 6811527710512792118, guid: 286d75f047a768941bf53fa4ecda8b31, type: 3}
 --- !u!114 &5273622489813436747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,3 +212,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 3
+--- !u!114 &4591030723223484432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6930122694965717508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62f75db882048ec4ca1fa9e0995439a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 6811527710512792118, guid: 286d75f047a768941bf53fa4ecda8b31, type: 3}
+  - {fileID: 6811527710512792118, guid: 286d75f047a768941bf53fa4ecda8b31, type: 3}
+  - {fileID: 6811527710512792118, guid: 286d75f047a768941bf53fa4ecda8b31, type: 3}
+  - {fileID: 6811527710512792118, guid: 286d75f047a768941bf53fa4ecda8b31, type: 3}
+  - {fileID: 6811527710512792118, guid: 286d75f047a768941bf53fa4ecda8b31, type: 3}
+  items: []
