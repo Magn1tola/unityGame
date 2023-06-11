@@ -27,14 +27,14 @@ public class BaseCharacter : MonoBehaviour
         hpController.OnHealed += ApplyHeal;
         hpController.OnDead += Dead;
     }
-    protected virtual bool IsGrounded()
+    public virtual bool IsGrounded()
     {
         Vector2 circlePosition = new Vector2(boxCollider2D.bounds.center.x, boxCollider2D.bounds.center.y - (boxCollider2D.size.y * transform.lossyScale.y / 2f));
         float circleRadius = boxCollider2D.size.x * transform.lossyScale.x / 2f;
         Collider2D[] colliders = Physics2D.OverlapCircleAll(circlePosition, circleRadius);
         return colliders.Length > 1;
     }
-    protected virtual void Flip()
+    public virtual void Flip()
     {
         if (rigidBody2D.velocity.x > 0)
             spriteRenderer.flipX = false;

@@ -104,12 +104,11 @@ GameObject:
   - component: {fileID: 3970498108758659285}
   - component: {fileID: 4070171542177195199}
   - component: {fileID: 8142824052222432849}
-  - component: {fileID: 6720549848947967736}
   - component: {fileID: 6329729908993262328}
   - component: {fileID: 4649887178559765616}
   - component: {fileID: 4085505647280138695}
   - component: {fileID: 7459019598493866656}
-  - component: {fileID: 6367088972236133082}
+  - component: {fileID: 2800832184820398838}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -131,7 +130,7 @@ Transform:
   m_Children:
   - {fileID: 2645818244401546357}
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3970498108758659285
 SpriteRenderer:
@@ -233,41 +232,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!58 &6720549848947967736
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6034377667674283860}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.03211629, y: -0.3115}
-  serializedVersion: 2
-  m_Radius: 0.3115
 --- !u!61 &6329729908993262328
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -300,7 +264,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.032116294, y: 0.16614574}
+  m_Offset: {x: -0.032116294, y: 0.009124219}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -311,7 +275,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.62308955, y: 0.95494545}
+  m_Size: {x: 0.62308955, y: 1.2689885}
   m_EdgeRadius: 0
 --- !u!114 &4649887178559765616
 MonoBehaviour:
@@ -327,8 +291,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDistance: 1
   damage: 1
-  speed: 8
-  jumpHeight: 8
 --- !u!114 &4085505647280138695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,7 +316,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 3
---- !u!114 &6367088972236133082
+--- !u!114 &2800832184820398838
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -363,6 +325,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 6034377667674283860}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50dcd7c576b8e4d4e88c386132d9bbca, type: 3}
+  m_Script: {fileID: 11500000, guid: f37f56c3b6da2c64483a4c2cf82696a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 10
+  jumpHeight: 8
