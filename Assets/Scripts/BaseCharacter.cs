@@ -24,6 +24,7 @@ public class BaseCharacter : MonoBehaviour
         hpController = GetComponent<HPController>();
 
         hpController.OnApplyDamage += ApplyDamage;
+        hpController.OnHealed += ApplyHeal;
         hpController.OnDead += Dead;
     }
     protected virtual bool IsGrounded()
@@ -70,4 +71,5 @@ public class BaseCharacter : MonoBehaviour
     protected virtual void Dead() {
         Debug.Log("dead");
     }
+    protected virtual void ApplyHeal(float hp){}
 }

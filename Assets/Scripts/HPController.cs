@@ -20,11 +20,6 @@ public class HPController : MonoBehaviour, IDamage, IHeal
         currentHp = maxHp;
     }
 
-    void Update()
-    {
-
-    }
-
     public void ApplyDamage(float damage, GameObject instigator)
     {
         if (currentHp < damage)
