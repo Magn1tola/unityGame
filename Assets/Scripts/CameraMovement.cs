@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
@@ -22,13 +20,6 @@ public class CameraMovement : MonoBehaviour
     {
         if (canMoving)
             _rigidbody2D.velocity = (_target.transform.position - transform.position) * speed;
-
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject == _target)
-            canMoving = true;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -38,5 +29,11 @@ public class CameraMovement : MonoBehaviour
 
         canMoving = false;
         _rigidbody2D.velocity = new Vector2(0f, 0f);
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject == _target)
+            canMoving = true;
     }
 }

@@ -1,23 +1,18 @@
 using UnityEngine;
 
-class Debug : UnityEngine.Debug
+internal class Debug : UnityEngine.Debug
 {
     public static void DrawCircle(Vector3 position, float radius, int segments, Color color, float duration)
     {
-        if (radius <= 0.0f || segments <= 0)
-        {
-            return;
-        }
+        if (radius <= 0.0f || segments <= 0) return;
 
-        float angleStep = (360.0f / segments);
-
-
+        var angleStep = 360.0f / segments;
         angleStep *= Mathf.Deg2Rad;
 
-        Vector3 lineStart = Vector3.zero;
-        Vector3 lineEnd = Vector3.zero;
+        var lineStart = Vector3.zero;
+        var lineEnd = Vector3.zero;
 
-        for (int i = 0; i < segments; i++)
+        for (var i = 0; i < segments; i++)
         {
             lineStart.x = Mathf.Cos(angleStep * i);
             lineStart.y = Mathf.Sin(angleStep * i);
@@ -37,13 +32,13 @@ class Debug : UnityEngine.Debug
 
     public static void DrawRectangle(Vector3 position, Vector2 size, Color color, float duration)
     {
-        Vector3 rightOffset = Vector3.right * size.x * 0.5f;
-        Vector3 upOffset = Vector3.up * size.y * 0.5f;
+        var rightOffset = Vector3.right * size.x * 0.5f;
+        var upOffset = Vector3.up * size.y * 0.5f;
 
-        Vector3 offsetA = rightOffset + upOffset;
-        Vector3 offsetB = -rightOffset + upOffset;
-        Vector3 offsetC = -rightOffset - upOffset;
-        Vector3 offsetD = rightOffset - upOffset;
+        var offsetA = rightOffset + upOffset;
+        var offsetB = -rightOffset + upOffset;
+        var offsetC = -rightOffset - upOffset;
+        var offsetD = rightOffset - upOffset;
 
         DrawLine(position + offsetA, position + offsetB, color, duration);
         DrawLine(position + offsetB, position + offsetC, color, duration);

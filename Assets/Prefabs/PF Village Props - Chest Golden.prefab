@@ -95,9 +95,8 @@ GameObject:
   - component: {fileID: 6930122694965717509}
   - component: {fileID: 6491913702539827632}
   - component: {fileID: 8299714909316348466}
-  - component: {fileID: 4685300694038870954}
-  - component: {fileID: 5273622489813436747}
   - component: {fileID: 4591030723223484432}
+  - component: {fileID: 7584049594010250895}
   m_Layer: 0
   m_Name: PF Village Props - Chest Golden
   m_TagString: Untagged
@@ -119,7 +118,7 @@ Transform:
   m_Children:
   - {fileID: 3615272710834565069}
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6491913702539827632
 Animator:
@@ -187,31 +186,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.0703368, y: 0.9008026}
   m_EdgeRadius: 0
---- !u!114 &4685300694038870954
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6930122694965717508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4853b16870eeea246a302457653c4014, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5273622489813436747
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6930122694965717508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3b7975b730c7e24d8557e9bb722e8eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHp: 3
 --- !u!114 &4591030723223484432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,9 +199,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabs:
-  - {fileID: 6811527710512792118, guid: 286d75f047a768941bf53fa4ecda8b31, type: 3}
-  - {fileID: 6811527710512792118, guid: 286d75f047a768941bf53fa4ecda8b31, type: 3}
-  - {fileID: 6811527710512792118, guid: 286d75f047a768941bf53fa4ecda8b31, type: 3}
-  - {fileID: 6811527710512792118, guid: 286d75f047a768941bf53fa4ecda8b31, type: 3}
-  - {fileID: 6811527710512792118, guid: 286d75f047a768941bf53fa4ecda8b31, type: 3}
+  - {fileID: 979045839316561228, guid: 4ff5d1ba765fe114a85f964889dff5b0, type: 3}
   items: []
+--- !u!114 &7584049594010250895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6930122694965717508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1432d8b4413c4d5ab024c5728050abf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
