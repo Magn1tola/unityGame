@@ -2,38 +2,36 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    [SerializeField] private GameObject _target;
-    [SerializeField] private float speed = 3f;
+    [SerializeField] private GameObject target;
 
-    private Rigidbody2D _rigidbody2D;
-    private bool canMoving;
+    [SerializeField] private Vector2 bounds = new Vector2(5f,5f);
 
     private void Start()
     {
-        _rigidbody2D = GetComponent<Rigidbody2D>();
-
-        if (_target == null)
-            _target = GameObject.FindGameObjectWithTag("Player");
+        target = GameObject.FindGameObjectWithTag("Player");
     }
 
-    private void Update()
+    private void LateUpdate()
     {
-        if (canMoving)
-            _rigidbody2D.velocity = (_target.transform.position - transform.position) * speed;
-    }
+        Vector3 delta = Vector3.zero;
+        float deltaX = target.transform.position.x - transform.position.x;
+        if (deltaX > bounds.x || deltaX < -bounds.x)
+        {
+            if (transform.position.x < target.transform.position.x)
+                delta.x = deltaX - bounds.x;
+            else
+                delta.x = deltaX + bounds.x;
+        }
+        
+        float deltaY = target.transform.position.y - transform.position.y;
+        if (deltaY > bounds.y || deltaY < -bounds.y)
+        {
+            if (transform.position.y < target.transform.position.y)
+                delta.y = deltaY - bounds.y;
+            else
+                delta.y = deltaY + bounds.y;
+        }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject != _target)
-            return;
-
-        canMoving = false;
-        _rigidbody2D.velocity = new Vector2(0f, 0f);
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject == _target)
-            canMoving = true;
+        transform.position += new Vector3(delta.x, delta.y, 0);
     }
 }

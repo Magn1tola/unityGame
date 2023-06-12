@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 644882371446441612}
   - component: {fileID: 1910753266226771381}
   - component: {fileID: 6775318080833657000}
-  - component: {fileID: 127376945523685125}
+  - component: {fileID: 8441030791681583620}
   m_Layer: 3
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 29
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &1910753266226771381
 Camera:
@@ -93,30 +93,17 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 703386022180063943}
   m_Enabled: 1
---- !u!50 &127376945523685125
-Rigidbody2D:
-  serializedVersion: 4
+--- !u!114 &8441030791681583620
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 703386022180063943}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95515f8f998fa8f409ea46ad151d2db1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  bounds: {x: 5, y: 5}
