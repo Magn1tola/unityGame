@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6329729908993262328}
   - component: {fileID: 7170101028823547592}
   - component: {fileID: 6357732334613867333}
+  - component: {fileID: 879978420034333495}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -35,7 +36,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3970498108758659285
 SpriteRenderer:
@@ -232,3 +233,17 @@ MonoBehaviour:
   attackDistance: 1
   damage: 1
   maxHealth: 10
+--- !u!114 &879978420034333495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6034377667674283860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029852ed23f449269e03d23c820b2a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 7
+  jumpHeight: 5

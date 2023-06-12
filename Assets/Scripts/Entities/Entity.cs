@@ -4,8 +4,6 @@
 [RequireComponent(typeof(SpriteRenderer))]
 public abstract class Entity : MonoBehaviour
 {
-    [SerializeField] protected float attackDistance = 1f;
-    [SerializeField] protected float damage = 1f;
     protected SpriteRenderer SpriteRenderer;
 
     public Rigidbody2D rigidBody2D { get; private set; }

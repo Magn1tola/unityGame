@@ -184,5 +184,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDistance: 2
-  damage: 1
+  damage: 3
   maxHealth: 3
+  moveSpeed: 1
+  minDistanceToLook: 6
+  cooldown: 1.5

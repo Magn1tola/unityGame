@@ -4,6 +4,9 @@
 [RequireComponent(typeof(Animator))]
 public abstract class EntityLiving : Entity, IEntityDamageable, IEntityHealable
 {
+    [SerializeField] protected float attackDistance = 1f;
+    [SerializeField] protected float damage = 1f;
+
     [SerializeField] private float maxHealth = 3;
 
     private CapsuleCollider2D _capsuleCollider2D;
@@ -62,7 +65,10 @@ public abstract class EntityLiving : Entity, IEntityDamageable, IEntityHealable
             if (hit.collider.gameObject == gameObject) continue;
 
             if (hit.collider.gameObject.TryGetComponent(out IEntityDamageable damageable))
+            {
+                if (hit.collider is BoxCollider2D && damageable is EntityPlayer) continue;
                 damageable.Damage(damage, gameObject);
+            }
         }
     }
 

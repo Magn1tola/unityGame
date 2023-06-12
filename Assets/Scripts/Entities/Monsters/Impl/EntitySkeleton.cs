@@ -1,21 +1,33 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
-public class EntitySkeleton : EntityLiving
+public class EntitySkeleton : EntityMonster
 {
     private static readonly int SpeedAnimation = Animator.StringToHash("Speed");
     private static readonly int DamageAnimation = Animator.StringToHash("Damage");
     private static readonly int DeadAnimation = Animator.StringToHash("Dead");
+    private static readonly int AttackAnimation = Animator.StringToHash("Attack");
+
+    [SerializeField] private float cooldown = 1.5f;
+
+    private float _cooldown;
 
     protected override void OnUpdate()
     {
-        Animator.SetFloat(SpeedAnimation, Mathf.Abs(rigidBody2D.velocity.x));
+        base.OnUpdate();
 
-        /*if (Vector2.Distance(player.transform.position, transform.position) > attackDistance * 0.9f &&
-            currentCooldown == 0)
-            MoveToTargetPosition(player.transform.position);
-        else if (currentCooldown == 0)
-            animator.SetTrigger("Attack");*/ // todo
+        Animator.SetFloat(SpeedAnimation, Mathf.Abs(rigidBody2D.velocity.x));
+    }
+
+    protected override void TryAttack()
+    {
+        if (_cooldown <= 0)
+        {
+            Animator.SetTrigger(AttackAnimation);
+
+            _cooldown = cooldown;
+        }
+
+        _cooldown -= Time.deltaTime;
     }
 
     public override void Damage(float damage, GameObject damager)
@@ -28,6 +40,7 @@ public class EntitySkeleton : EntityLiving
     public override void Dead()
     {
         Animator.SetTrigger(DeadAnimation);
+
         Destroy(gameObject, 2f);
     }
 }
