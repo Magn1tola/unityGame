@@ -26,7 +26,7 @@ public class DropItems : MonoBehaviour
                 if (_items[i] == null)
                     continue;
                 var position = new Vector3(transform.position.x + iteration * direction * itemDistance,
-                    transform.position.y + 0.7f, 0);
+                    transform.position.y + 1f, 0);
                 _items[i].transform.position = new Vector3(Mathf.Lerp(transform.position.x, position.x, x),
                     position.y + GetYOffset(Mathf.PI * x), 0);
             }
