@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EntityCoin : EntityItem
+public class EntityCoin : EntityPhysicItem
 {
     private void OnCollisionEnter2D(Collision2D collision)
     {

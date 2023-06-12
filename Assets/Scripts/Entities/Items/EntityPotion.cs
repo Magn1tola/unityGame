@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public abstract class EntityPotion : MonoBehaviour
+public abstract class EntityPotion : EntityPhysicItem
 {
-	private void OnTriggerEnter2D(Collider2D collision)
+	private void OnCollisionEnter2D(Collision2D collision)
 	{
 		if (collision.gameObject.TryGetComponent(out EntityPlayer player))
 		{

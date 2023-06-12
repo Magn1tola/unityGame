@@ -16,25 +16,39 @@ public class DropItems : MonoBehaviour
     {
         if (x < 1 && droped)
         {
-            float direction = 1;
-            var iteration = 0;
             x += Time.deltaTime;
             for (var i = 0; i < _items.Count; i++)
             {
-                direction *= -1;
-                iteration++;
                 if (_items[i] == null)
                     continue;
-                var position = new Vector3(transform.position.x + iteration * direction * itemDistance,
-                    transform.position.y + 1f, 0);
-                _items[i].transform.position = new Vector3(Mathf.Lerp(transform.position.x, position.x, x),
-                    position.y + GetYOffset(Mathf.PI * x), 0);
+
+                _items[i].transform.position = CalculateItemCurrentPosition(CalculateItemTargetPosition(i), x);
             }
         }
     }
 
-    private float GetYOffset(float x) => Mathf.Sin(x);
+    private float GetYOffset(float x) => Mathf.Sin(x) * 2;
 
+    private Vector3 CalculateItemCurrentPosition(Vector3 targetPosition, float currentTime)
+    {
+        return new Vector3(Mathf.Lerp(transform.position.x, targetPosition.x, x),
+            Mathf.Lerp(transform.position.y, targetPosition.y, x) + GetYOffset(Mathf.PI * currentTime), 0);
+    }
+
+    private Vector3 CalculateItemTargetPosition(int itemIndex)
+    {
+        int direction = (itemIndex % 2 != 0) ? 1 : -1;
+
+        float positionX = transform.position.x + itemDistance * itemIndex * direction;
+        float positionY = transform.position.y + 1f;
+
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(new Vector2(positionX, positionY), Vector2.down);
+
+        positionY = raycastHit2D.point.y + 0.2f;
+        
+            
+        return new Vector3(positionX, positionY, 0f);
+    }
     public void Drop()
     {
         if (droped)
