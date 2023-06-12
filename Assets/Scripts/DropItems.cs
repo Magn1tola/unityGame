@@ -4,7 +4,9 @@ using UnityEngine;
 public class DropItems : MonoBehaviour
 {
     [SerializeField] private GameObject[] prefabs;
-    [SerializeField] private List<GameObject> items;
+    
+    private readonly List<GameObject> _items = new();
+    
     private readonly float itemDistance = 0.5f;
 
     private bool droped;
@@ -17,15 +19,15 @@ public class DropItems : MonoBehaviour
             float direction = 1;
             var iteration = 0;
             x += Time.deltaTime;
-            for (var i = 0; i < items.Count; i++)
+            for (var i = 0; i < _items.Count; i++)
             {
                 direction *= -1;
                 iteration++;
-                if (items[i] == null)
+                if (_items[i] == null)
                     continue;
                 var position = new Vector3(transform.position.x + iteration * direction * itemDistance,
                     transform.position.y + 0.7f, 0);
-                items[i].transform.position = new Vector3(Mathf.Lerp(transform.position.x, position.x, x),
+                _items[i].transform.position = new Vector3(Mathf.Lerp(transform.position.x, position.x, x),
                     position.y + GetYOffset(Mathf.PI * x), 0);
             }
         }
@@ -41,7 +43,7 @@ public class DropItems : MonoBehaviour
         foreach (var prefab in prefabs)
         {
             var item = Instantiate(prefab, transform.position, new Quaternion(0, 0, 0, 0));
-            items.Add(item);
+            _items.Add(item);
         }
     }
 }

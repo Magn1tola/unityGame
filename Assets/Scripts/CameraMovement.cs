@@ -4,17 +4,14 @@ public class CameraMovement : MonoBehaviour
 {
     [SerializeField] private GameObject target;
 
-    [SerializeField] private Vector2 bounds = new Vector2(5f,5f);
+    [SerializeField] private Vector2 bounds = new(5f, 5f);
 
-    private void Start()
-    {
-        target = GameObject.FindGameObjectWithTag("Player");
-    }
+    private void Start() => target = GameObject.FindGameObjectWithTag("Player");
 
     private void LateUpdate()
     {
-        Vector3 delta = Vector3.zero;
-        float deltaX = target.transform.position.x - transform.position.x;
+        var delta = Vector3.zero;
+        var deltaX = target.transform.position.x - transform.position.x;
         if (deltaX > bounds.x || deltaX < -bounds.x)
         {
             if (transform.position.x < target.transform.position.x)
@@ -22,8 +19,8 @@ public class CameraMovement : MonoBehaviour
             else
                 delta.x = deltaX + bounds.x;
         }
-        
-        float deltaY = target.transform.position.y - transform.position.y;
+
+        var deltaY = target.transform.position.y - transform.position.y;
         if (deltaY > bounds.y || deltaY < -bounds.y)
         {
             if (transform.position.y < target.transform.position.y)

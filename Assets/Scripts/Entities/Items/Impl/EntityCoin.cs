@@ -8,8 +8,6 @@ public class EntityCoin : EntityItem
         if (collision.gameObject.TryGetComponent(out EntityPlayer player))
         {
             player.Data.Money += 1;
-            
-            UnityEngine.Debug.Log(player.Data.Money);
 
             Destroy(gameObject);
         }
