@@ -186,6 +186,6 @@ MonoBehaviour:
   attackDistance: 2
   damage: 3
   maxHealth: 3
-  moveSpeed: 1
-  minDistanceToLook: 6
+  moveSpeed: 3
+  minDistanceToLook: 8
   cooldown: 1.5
