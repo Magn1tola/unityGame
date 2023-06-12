@@ -28,7 +28,7 @@ public abstract class Entity : MonoBehaviour
     {
     }
 
-    public bool IsGrounded() => Mathf.Abs(rigidBody2D.velocity.y) < 0.30F; // 0.05
+    public bool IsGrounded() => Mathf.Abs(rigidBody2D.velocity.y) < 0.05F;
 
     public void FlipSprite() => SpriteRenderer.flipX = !(rigidBody2D.velocity.x > 0);
 }
