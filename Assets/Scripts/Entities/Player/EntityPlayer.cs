@@ -15,14 +15,7 @@ public class EntityPlayer : EntityLiving
         _isFalling = !IsGrounded();
         Animator.SetBool(IsFallingAnimation, _isFalling);
 
-        if (Input.GetKeyDown(KeyCode.Space)) Attack();
-    }
-
-    public override void Attack()
-    {
-        base.Attack();
-
-        Animator.SetTrigger(AttackAnimation);
+        if (Input.GetKeyDown(KeyCode.Space)) Animator.SetTrigger(AttackAnimation);
     }
 
     public override void Dead()
