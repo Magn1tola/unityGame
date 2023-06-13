@@ -43,6 +43,8 @@ public abstract class EntityLiving : Entity, IEntityDamageable, IEntityHealable
 
     public virtual void Attack()
     {
+        if (!IsAlive()) return;
+
         var attackDirection = SpriteRenderer.flipX ? -1f : 1f;
         var bounds = CapsuleCollider2D.bounds;
         var startPosition = new Vector2(
