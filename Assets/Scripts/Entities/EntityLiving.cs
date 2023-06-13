@@ -6,15 +6,13 @@ public abstract class EntityLiving : Entity, IEntityDamageable, IEntityHealable
 {
     [SerializeField] protected float attackDistance = 1f;
     [SerializeField] protected float damage = 1f;
-
     [SerializeField] private float maxHealth = 3;
 
-    private CapsuleCollider2D _capsuleCollider2D;
+    public CapsuleCollider2D CapsuleCollider2D { get; private set; }
+    public Animator Animator { get; private set; }
 
     private float _health;
-
-    protected Animator Animator;
-
+    
     public virtual void Damage(float damage, GameObject damager)
     {
         if (damage <= 0) return;
@@ -37,7 +35,7 @@ public abstract class EntityLiving : Entity, IEntityDamageable, IEntityHealable
 
     protected override void Init()
     {
-        _capsuleCollider2D = GetComponent<CapsuleCollider2D>();
+        CapsuleCollider2D = GetComponent<CapsuleCollider2D>();
         Animator = GetComponent<Animator>();
 
         _health = maxHealth;
@@ -46,15 +44,15 @@ public abstract class EntityLiving : Entity, IEntityDamageable, IEntityHealable
     public virtual void Attack()
     {
         var attackDirection = SpriteRenderer.flipX ? -1f : 1f;
-        var bounds = _capsuleCollider2D.bounds;
+        var bounds = CapsuleCollider2D.bounds;
         var startPosition = new Vector2(
-            bounds.center.x + _capsuleCollider2D.size.x * attackDirection,
+            bounds.center.x + CapsuleCollider2D.size.x * attackDirection,
             bounds.center.y
         );
 
         var raycastHits2D = Physics2D.BoxCastAll(
             startPosition,
-            _capsuleCollider2D.bounds.size,
+            CapsuleCollider2D.bounds.size,
             0f,
             Vector2.right * attackDirection,
             attackDistance

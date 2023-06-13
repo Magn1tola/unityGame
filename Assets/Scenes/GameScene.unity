@@ -6345,6 +6345,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 1910753266226771381, guid: c4991e0296727b3408af7b149ba51b05, type: 3}
+      propertyPath: orthographic size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910753266226771381, guid: c4991e0296727b3408af7b149ba51b05, type: 3}
+      propertyPath: m_NormalizedViewPortRect.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910753266226771381, guid: c4991e0296727b3408af7b149ba51b05, type: 3}
+      propertyPath: m_NormalizedViewPortRect.width
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910753266226771381, guid: c4991e0296727b3408af7b149ba51b05, type: 3}
+      propertyPath: m_NormalizedViewPortRect.height
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7090,14 +7106,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 879978420034333495, guid: 8ff75af71352fc14dab4f77c5177abc5, type: 3}
-      propertyPath: moveSpeed
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 879978420034333495, guid: 8ff75af71352fc14dab4f77c5177abc5, type: 3}
-      propertyPath: jumpHeight
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 6034377667674283860, guid: 8ff75af71352fc14dab4f77c5177abc5, type: 3}
       propertyPath: m_Name
       value: Player
@@ -7108,11 +7116,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8849645708619122709, guid: 8ff75af71352fc14dab4f77c5177abc5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.72
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 8849645708619122709, guid: 8ff75af71352fc14dab4f77c5177abc5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.38
+      value: -8.57
       objectReference: {fileID: 0}
     - target: {fileID: 8849645708619122709, guid: 8ff75af71352fc14dab4f77c5177abc5, type: 3}
       propertyPath: m_LocalPosition.z
