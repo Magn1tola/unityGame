@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 428585250685102358}
   - component: {fileID: 9142718332217806206}
   - component: {fileID: 8883342392314125736}
+  - component: {fileID: 5116080735161905275}
   m_Layer: 7
   m_Name: Skeleton
   m_TagString: Untagged
@@ -34,7 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 27
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7341006021217142864
 SpriteRenderer:
@@ -189,3 +190,17 @@ MonoBehaviour:
   moveSpeed: 3
   minDistanceToLook: 8
   cooldown: 1.5
+--- !u!114 &5116080735161905275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 979045839316561228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62f75db882048ec4ca1fa9e0995439a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 6811527710512792118, guid: 286d75f047a768941bf53fa4ecda8b31, type: 3}
