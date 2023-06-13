@@ -7,6 +7,7 @@ public class MovementController : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 10;
     [SerializeField] private float jumpHeight = 5;
+    [SerializeField] private float dashCooldown = 3;
     [SerializeField] private float dashLenght = 5;
     [SerializeField] private float dashSpeed = 1;
 
@@ -17,7 +18,8 @@ public class MovementController : MonoBehaviour
 
     private Vector3 dashPosition;
     private bool isDashing;
-
+    private float dashCurrentCooldown;
+    
     public void Start()
     {
         _player = GetComponent<EntityPlayer>();
@@ -35,6 +37,8 @@ public class MovementController : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing) DashStart();
+
+        CalculateDashCooldown(Time.deltaTime);
     }
 
     private void FixedUpdate()
@@ -57,6 +61,14 @@ public class MovementController : MonoBehaviour
         }
     }
 
+    private void CalculateDashCooldown(float value)
+    {
+        if (dashCurrentCooldown - value < 0)
+            dashCurrentCooldown = 0;
+        else
+            dashCurrentCooldown -= value;
+    }
+
     private void DashStart()
     {
         isDashing = true;
@@ -65,11 +77,17 @@ public class MovementController : MonoBehaviour
 
     private void Dashing()
     {
-        if (!isDashing) return;
+        if (!isDashing || dashCurrentCooldown > 0)
+        {
+            isDashing = false;
+            return;
+        }
+
+        dashCurrentCooldown -= Time.deltaTime;
         transform.position = Vector3.MoveTowards(
             transform.position,
             dashPosition,
-            dashSpeed * Time.deltaTime
+            dashSpeed
         );
         if (transform.position == dashPosition) DashEnd();
     }
@@ -77,6 +95,7 @@ public class MovementController : MonoBehaviour
     private void DashEnd()
     {
         isDashing = false;
+        dashCurrentCooldown = dashCooldown;
     }
 
     private Vector3 CalculateDashPosition()
