@@ -97,7 +97,7 @@ public class MovementController : MonoBehaviour
             );
 
         return new Vector3(
-            position.x + directionX * raycastHit2D.distance - _collider2D.bounds.size.x / 2,
+            position.x + directionX * (raycastHit2D.distance - _collider2D.bounds.size.x / 2),
             position.y,
             0
         );
