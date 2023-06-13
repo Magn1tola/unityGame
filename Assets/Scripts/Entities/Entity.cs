@@ -6,11 +6,11 @@ public abstract class Entity : MonoBehaviour
 {
     protected SpriteRenderer SpriteRenderer;
 
-    public Rigidbody2D rigidBody2D { get; private set; }
+    public Rigidbody2D RigidBody2D { get; private set; }
 
     private void Awake()
     {
-        rigidBody2D = GetComponent<Rigidbody2D>();
+        RigidBody2D = GetComponent<Rigidbody2D>();
         SpriteRenderer = GetComponent<SpriteRenderer>();
 
         Init();
@@ -26,7 +26,7 @@ public abstract class Entity : MonoBehaviour
     {
     }
 
-    public bool IsGrounded() => Mathf.Abs(rigidBody2D.velocity.y) < 0.05F;
+    public bool IsGrounded() => Mathf.Abs(RigidBody2D.velocity.y) < 0.05F;
 
-    public void FlipSprite() => SpriteRenderer.flipX = !(rigidBody2D.velocity.x > 0);
+    public void FlipSprite() => SpriteRenderer.flipX = !(RigidBody2D.velocity.x > 0);
 }

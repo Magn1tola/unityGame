@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,13 +6,11 @@ public class EntityPlayer : EntityLiving
     private static readonly int IsFallingAnimation = Animator.StringToHash("isFalling");
     private static readonly int AttackAnimation = Animator.StringToHash("Attack");
 
-    private bool _isFalling;
-    public PlayerData Data = new();
+    public readonly PlayerData Data = new();
 
     protected override void OnUpdate()
     {
-        _isFalling = !IsGrounded();
-        Animator.SetBool(IsFallingAnimation, _isFalling);
+        Animator.SetBool(IsFallingAnimation, !IsGrounded());
 
         if (Input.GetKeyDown(KeyCode.Space)) Animator.SetTrigger(AttackAnimation);
     }

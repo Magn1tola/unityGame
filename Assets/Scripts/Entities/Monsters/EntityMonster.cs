@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class EntityMonster : EntityLiving
@@ -16,7 +17,7 @@ public abstract class EntityMonster : EntityLiving
 
     protected override void OnUpdate()
     {
-        if (Vector2.Distance(_player.transform.position, transform.position) > minDistanceToLook)
+        if (Vector2.Distance(_player.transform.position, transform.position) > minDistanceToLook || !IsAlive())
             return;
 
         if (CanAttack()) TryAttack();
@@ -30,7 +31,7 @@ public abstract class EntityMonster : EntityLiving
     protected void Move(Vector2 to)
     {
         var directionX = to.x > transform.position.x ? 1f : -1f;
-        rigidBody2D.velocity = new Vector2(moveSpeed * directionX, rigidBody2D.velocity.y);
+        RigidBody2D.velocity = new Vector2(moveSpeed * directionX, RigidBody2D.velocity.y);
         FlipSprite();
     }
 }

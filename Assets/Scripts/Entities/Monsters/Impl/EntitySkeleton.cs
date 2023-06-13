@@ -15,7 +15,7 @@ public class EntitySkeleton : EntityMonster
     {
         base.OnUpdate();
 
-        Animator.SetFloat(SpeedAnimation, Mathf.Abs(rigidBody2D.velocity.x));
+        Animator.SetFloat(SpeedAnimation, Mathf.Abs(RigidBody2D.velocity.x));
     }
 
     protected override void TryAttack()
@@ -39,6 +39,7 @@ public class EntitySkeleton : EntityMonster
 
     public override void Dead()
     {
+        base.Dead();
         Animator.SetTrigger(DeadAnimation);
 
         Destroy(gameObject, 2f);

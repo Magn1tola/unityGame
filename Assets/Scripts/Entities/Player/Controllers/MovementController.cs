@@ -11,17 +11,17 @@ public class MovementController : MonoBehaviour
     [SerializeField] private float dashSpeed = 1;
 
     private Animator _animator;
+    private Collider2D _collider2D;
     private EntityPlayer _player;
     private Rigidbody2D _rigidbody2D;
-    private Collider2D _collider2D;
-    
+
     private Vector3 dashPosition;
     private bool isDashing;
 
     public void Start()
     {
         _player = GetComponent<EntityPlayer>();
-        _rigidbody2D = _player.rigidBody2D;
+        _rigidbody2D = _player.RigidBody2D;
         _animator = _player.Animator;
         _collider2D = _player.CapsuleCollider2D;
     }
@@ -33,6 +33,7 @@ public class MovementController : MonoBehaviour
             _rigidbody2D.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
             _animator.SetTrigger(JumpAnimation);
         }
+
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing) DashStart();
     }
 
@@ -55,23 +56,29 @@ public class MovementController : MonoBehaviour
             _player.FlipSprite();
         }
     }
-    
+
     private void DashStart()
     {
-        isDashing = true; 
+        isDashing = true;
         dashPosition = CalculateDashPosition();
     }
 
     private void Dashing()
     {
         if (!isDashing) return;
-        transform.position = Vector3.MoveTowards(transform.position, dashPosition, dashSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(
+            transform.position,
+            dashPosition,
+            dashSpeed * Time.deltaTime
+        );
         if (transform.position == dashPosition) DashEnd();
     }
+
     private void DashEnd()
     {
         isDashing = false;
     }
+
     private Vector3 CalculateDashPosition()
     {
         var directionX = _rigidbody2D.velocity.normalized.x;
@@ -81,7 +88,7 @@ public class MovementController : MonoBehaviour
             new Vector2(position.x + dashLenght * directionX, position.y),
             LayerMask.GetMask("Ground")
         );
-        
+
         if (!raycastHit2D.collider)
             return new Vector3(
                 position.x + directionX * dashLenght,
@@ -90,7 +97,7 @@ public class MovementController : MonoBehaviour
             );
 
         return new Vector3(
-            position.x + directionX * raycastHit2D.distance - (_collider2D.bounds.size.x / 2),
+            position.x + directionX * raycastHit2D.distance - _collider2D.bounds.size.x / 2,
             position.y,
             0
         );

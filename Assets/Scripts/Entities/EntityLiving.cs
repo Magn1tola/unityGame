@@ -8,19 +8,19 @@ public abstract class EntityLiving : Entity, IEntityDamageable, IEntityHealable
     [SerializeField] protected float damage = 1f;
     [SerializeField] private float maxHealth = 3;
 
+    private float _health;
+
     public CapsuleCollider2D CapsuleCollider2D { get; private set; }
     public Animator Animator { get; private set; }
 
-    private float _health;
-    
     public virtual void Damage(float damage, GameObject damager)
     {
         if (damage <= 0) return;
 
-        rigidBody2D.velocity = Vector2.zero;
+        RigidBody2D.velocity = Vector2.zero;
 
         var direction = damager.transform.position.x > gameObject.transform.position.x ? -1f : 1f;
-        rigidBody2D.AddForce(transform.right * (direction * 2f) + transform.up * 5f, ForceMode2D.Impulse);
+        RigidBody2D.AddForce(transform.right * (direction * 2f) + transform.up * 5f, ForceMode2D.Impulse);
 
         _health -= damage;
 
@@ -70,5 +70,7 @@ public abstract class EntityLiving : Entity, IEntityDamageable, IEntityHealable
         }
     }
 
-    public virtual void Dead() => UnityEngine.Debug.Log("dead");
+    protected bool IsAlive() => _health > 0;
+
+    public virtual void Dead() => UnityEngine.Debug.Log("Dead");
 }
