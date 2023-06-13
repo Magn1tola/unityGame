@@ -39,7 +39,10 @@ public class EntitySkeleton : EntityMonster
 
     public override void Dead()
     {
+        Animator.StopPlayback();
+
         base.Dead();
+
         Animator.SetTrigger(DeadAnimation);
 
         Destroy(gameObject, 2f);
