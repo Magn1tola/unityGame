@@ -13,7 +13,11 @@ public class EntitySkeleton : EntityMonster
 
     protected override void OnUpdate()
     {
-        base.OnUpdate();
+        if (Vector2.Distance(_player.transform.position, transform.position) > minDistanceToLook || !IsAlive())
+            return;
+
+        if (CanAttack()) TryAttack();
+        else Move(_player.transform.position);
 
         Animator.SetFloat(SpeedAnimation, Mathf.Abs(RigidBody2D.velocity.x));
     }

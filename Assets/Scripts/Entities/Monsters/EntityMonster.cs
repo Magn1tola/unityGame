@@ -6,7 +6,7 @@ public abstract class EntityMonster : EntityLiving
     [SerializeField] private float moveSpeed;
     [SerializeField] protected float minDistanceToLook;
 
-    private EntityPlayer _player;
+    protected EntityPlayer _player;
     private DropItems _dropItems;
 
 
@@ -16,15 +16,6 @@ public abstract class EntityMonster : EntityLiving
 
         _player = FindObjectOfType<EntityPlayer>();
         _dropItems = GetComponent<DropItems>();
-    }
-
-    protected override void OnUpdate()
-    {
-        if (Vector2.Distance(_player.transform.position, transform.position) > minDistanceToLook || !IsAlive())
-            return;
-
-        if (CanAttack()) TryAttack();
-        else Move(_player.transform.position);
     }
 
     protected abstract void TryAttack();
