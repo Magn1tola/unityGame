@@ -11707,6 +11707,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goblin
       objectReference: {fileID: 0}
+    - target: {fileID: 5668735689232182929, guid: ac0b1eddd50e35340a4224780e6b1b55, type: 3}
+      propertyPath: attackDistance
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

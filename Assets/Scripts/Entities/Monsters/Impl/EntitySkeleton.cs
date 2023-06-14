@@ -13,8 +13,7 @@ public class EntitySkeleton : EntityMonster
 
     protected override void OnUpdate()
     {
-        if (Vector2.Distance(_player.transform.position, transform.position) > minDistanceToLook || !IsAlive())
-            return;
+        if (!IsPlayerVisible() || !IsAlive()) return;
 
         if (CanAttack()) TryAttack();
         else Move(_player.transform.position);

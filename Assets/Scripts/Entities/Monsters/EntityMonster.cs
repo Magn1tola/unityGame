@@ -22,10 +22,12 @@ public abstract class EntityMonster : EntityLiving
 
     protected bool CanAttack() => Vector2.Distance(_player.transform.position, transform.position) <= attackDistance;
 
+    protected bool IsPlayerVisible() => Vector2.Distance(_player.transform.position, transform.position) <= minDistanceToLook;
+
     protected void Move(Vector2 to)
     {
         var directionX = to.x > transform.position.x ? 1f : -1f;
-        RigidBody2D.velocity = CheckGround(directionX) 
+        RigidBody2D.velocity = CheckGround(directionX) || !CanAttack()
             ? new Vector2(directionX * moveSpeed, RigidBody2D.velocity.y) 
             : Vector2.zero;
         FlipSprite();

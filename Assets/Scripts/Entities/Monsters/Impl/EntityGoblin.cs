@@ -9,83 +9,69 @@ public class EntityGoblin : EntityMonster
     
     [SerializeField] private float cooldown = 1.5f;
     [SerializeField] private float attackCooldown = 0.5f;
-    
     [SerializeField] private float dashCooldown = 1;
-    [SerializeField] private float dashLenght = 3;
     [SerializeField] private float dashSpeed = 0.1f;
     
     private Vector3 dashPosition;
     private bool isDashing;
-
-    private int attackCounter = 0;
-
-    private float _cooldown;
-
+    private int attackCounter;
+    private float currentCooldown;
+    
     protected override void OnUpdate()
     {
-        if (Vector2.Distance(_player.transform.position, transform.position) > minDistanceToLook || !IsAlive())
+        if (!IsPlayerVisible() || !IsAlive())
         {
             attackCounter = 0;
             return;
         }
         
+        currentCooldown -= Time.deltaTime;
+        Animator.SetFloat(SpeedAnimation, Mathf.Abs(RigidBody2D.velocity.x));
+        
+        if (currentCooldown > 0) return;
         switch (attackCounter)
         {
             case 0:
-                if (_cooldown > 0) break;
                 if (CanAttack()) TryAttack();
                 else
                 {
                     Move(_player.transform.position);
                     break;
                 }
-                _cooldown = attackCooldown;
+                currentCooldown = attackCooldown;
                 attackCounter++;
                 break;
+            
             case 1:
-                if (_cooldown > 0) break;
                 if (CanAttack() && !isDashing) DashStart();
-                else
-                {
-                    attackCounter = 0;
-                    break;
-                }
+                else attackCounter = 0;
                 break;
+            
             case 2:
-                if (_cooldown > 0) break;
                 if (CanAttack()) TryAttack();
                 else
                 {
                     attackCounter = 0;
                     break;
                 }
-                _cooldown = cooldown;
+                currentCooldown = cooldown;
                 attackCounter = 0;
                 break;
         }
-        if (!isDashing)
-            _cooldown -= Time.deltaTime;
-        Animator.SetFloat(SpeedAnimation, Mathf.Abs(RigidBody2D.velocity.x));
+        
     }
-    
-    private void FixedUpdate()
-    {
-        Dashing();
-    }
+
+    private void FixedUpdate() => Dashing();
 
     protected override void TryAttack()
     {
-        if (_cooldown <= 0)
-        {
-            Animator.SetTrigger(AttackAnimation);
-        }
-
+        currentCooldown = attackCooldown;
+        Animator.SetTrigger(AttackAnimation);
     }
 
     public override void Damage(float damage, GameObject damager)
     {
         base.Damage(damage, damager);
-
         Animator.SetTrigger(DamageAnimation);
     }
 
@@ -107,6 +93,7 @@ public class EntityGoblin : EntityMonster
 
     private void DashStart()
     {
+        if (isDashing) return;
         isDashing = true;
         dashPosition = CalculateDashPosition();
     }
@@ -127,30 +114,32 @@ public class EntityGoblin : EntityMonster
     private void DashEnd()
     {
         isDashing = false;
-        _cooldown = dashCooldown;
+        currentCooldown = dashCooldown;
         attackCounter++;
     }
 
     private Vector3 CalculateDashPosition()
     {
-        var directionX = (_player.transform.position - transform.position).normalized.x;
-        var position = transform.position;
+        var playerPosition = _player.transform.position;
+        var startPosition = transform.position;
+        var directionX = (playerPosition - startPosition).normalized.x;
+        var endPosition = new Vector2(
+            playerPosition.x + attackDistance * 0.8f * directionX,
+            startPosition.y
+            );
+        
         var raycastHit2D = Physics2D.Linecast(
-            position,
-            new Vector2(position.x + dashLenght * directionX, position.y),
+            startPosition, 
+            endPosition,
             LayerMask.GetMask("Ground")
-        );
-
-        if (!raycastHit2D.collider)
-            return new Vector3(
-                position.x + directionX * dashLenght,
-                position.y,
-                0
             );
 
+        if (raycastHit2D.collider)
+            endPosition.x = raycastHit2D.point.x;
+
         return new Vector3(
-            position.x + directionX * (raycastHit2D.distance - CapsuleCollider2D.bounds.size.x / 2),
-            position.y,
+            endPosition.x + CapsuleCollider2D.bounds.size.x / 2 * directionX,
+            startPosition.y,
             0
         );
     }
