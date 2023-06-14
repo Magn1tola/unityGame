@@ -6,7 +6,11 @@ public class CameraMovement : MonoBehaviour
 
     [SerializeField] private Vector2 bounds = new(5f, 5f);
 
-    private void Start() => target = GameObject.FindGameObjectWithTag("Player");
+    private void Start()
+    {
+        if (!target)
+            target = GameObject.FindGameObjectWithTag("Player");
+    }
 
     private void LateUpdate()
     {

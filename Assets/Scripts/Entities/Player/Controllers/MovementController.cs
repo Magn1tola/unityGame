@@ -2,10 +2,15 @@
 
 public class MovementController : MonoBehaviour
 {
-    private static readonly int SpeedAnimation = Animator.StringToHash("speed");
-    private static readonly int JumpAnimation = Animator.StringToHash("Jump");
+    private const float MaxMoveSpeed = 10f;
+    private static readonly int WalkSpeedAnimation = Animator.StringToHash("walkSpeed");
 
-    [SerializeField] private float moveSpeed = 10;
+    private static readonly int WalkAnimation = Animator.StringToHash("isWalking");
+    private static readonly int JumpAnimation = Animator.StringToHash("isJumping");
+
+    [SerializeField] [Range(1f, MaxMoveSpeed)]
+    private float moveSpeed = 6;
+
     [SerializeField] private float jumpHeight = 5;
     [SerializeField] private float dashCooldown = 3;
     [SerializeField] private float dashLenght = 5;
@@ -15,11 +20,11 @@ public class MovementController : MonoBehaviour
     private Collider2D _collider2D;
     private EntityPlayer _player;
     private Rigidbody2D _rigidbody2D;
+    private float dashCurrentCooldown;
 
     private Vector3 dashPosition;
     private bool isDashing;
-    private float dashCurrentCooldown;
-    
+
     public void Start()
     {
         _player = GetComponent<EntityPlayer>();
@@ -32,9 +37,11 @@ public class MovementController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W) && _player.IsGrounded())
         {
+            _animator.SetBool(JumpAnimation, true);
             _rigidbody2D.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
-            _animator.SetTrigger(JumpAnimation);
         }
+
+        if (_player.IsGrounded()) _animator.SetBool(JumpAnimation, false);
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing) DashStart();
 
@@ -49,24 +56,26 @@ public class MovementController : MonoBehaviour
 
     private void Move()
     {
+        _animator.SetFloat(WalkSpeedAnimation, moveSpeed / MaxMoveSpeed);
+
         var moveX = Input.GetAxis("Horizontal");
         if (moveX != 0)
         {
             var velocity = _rigidbody2D.velocity;
             _rigidbody2D.velocity = new Vector2(moveX * moveSpeed, velocity.y);
 
-            _animator.SetFloat(SpeedAnimation, Mathf.Abs(velocity.x));
+            _animator.SetBool(WalkAnimation, true);
 
             _player.FlipSprite();
         }
+        else _animator.SetBool(WalkAnimation, false);
     }
 
     private void CalculateDashCooldown(float value)
     {
         if (dashCurrentCooldown - value < 0)
             dashCurrentCooldown = 0;
-        else
-            dashCurrentCooldown -= value;
+        else dashCurrentCooldown -= value;
     }
 
     private void DashStart()
