@@ -15,7 +15,8 @@ public class MovementController : MonoBehaviour
     [SerializeField] private float dashCooldown = 3;
     [SerializeField] private float dashLenght = 5;
     [SerializeField] private float dashSpeed = 1;
-
+    [SerializeField] private GameObject dashEffect;
+    
     private Animator _animator;
     private Collider2D _collider2D;
     private EntityPlayer _player;
@@ -80,8 +81,21 @@ public class MovementController : MonoBehaviour
 
     private void DashStart()
     {
+        if (isDashing || dashCurrentCooldown > 0) return;
         isDashing = true;
         dashPosition = CalculateDashPosition();
+        
+        var effectPosition = new Vector3(
+            (transform.position.x + dashPosition.x) / 2,
+            transform.position.y - 0.5f,
+            0
+            );
+        var effectRotation = (dashPosition.x > transform.position.x)
+            ? new Quaternion(0, 0, 0, 0)
+            : new Quaternion(0, 0, 180, 0); 
+        
+        Instantiate(dashEffect, effectPosition, effectRotation);
+        
     }
 
     private void Dashing()
