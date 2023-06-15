@@ -1,14 +1,9 @@
-using UnityEngine;
-
-public class EntityCoin : EntityPhysicItem
+public class EntityCoin : EntityItem
 {
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected override void OnCollide(EntityPlayer player)
     {
-        if (collision.gameObject.TryGetComponent(out EntityPlayer player))
-        {
-            player.Data.Money += 1;
+        player.Data.Money += 1;
 
-            Destroy(gameObject);
-        }
+        Destroy(gameObject);
     }
 }

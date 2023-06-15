@@ -1,15 +1,10 @@
-using UnityEngine;
-
-public abstract class EntityPotion : EntityPhysicItem
+public abstract class EntityPotion : EntityItem
 {
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected override void OnCollide(EntityPlayer player)
     {
-        if (collision.gameObject.TryGetComponent(out EntityPlayer player))
-        {
-            AddEffect(player);
+        AddEffect(player);
 
-            Destroy(gameObject);
-        }
+        Destroy(gameObject);
     }
 
     protected abstract void AddEffect(EntityPlayer player);
