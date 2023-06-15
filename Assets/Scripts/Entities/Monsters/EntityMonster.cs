@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(DropItems))]
 public abstract class EntityMonster : EntityLiving
 {
-    [SerializeField] private float moveSpeed;
+    [SerializeField] protected float moveSpeed;
     [SerializeField] protected float minDistanceToLook;
 
     protected EntityPlayer _player;
@@ -20,21 +20,24 @@ public abstract class EntityMonster : EntityLiving
 
     protected abstract void TryAttack();
 
-    protected bool CanAttack() => Vector2.Distance(_player.transform.position, transform.position) <= attackDistance;
+    protected virtual bool CanAttack() => Vector2.Distance(_player.transform.position, transform.position) <= attackDistance;
 
     protected bool IsPlayerVisible() => Vector2.Distance(_player.transform.position, transform.position) <= minDistanceToLook;
 
-    protected void Move(Vector2 to)
+    protected virtual bool CanMove(Vector2 to) => CheckGround(to) && !CanAttack();
+    
+    protected virtual void Move(Vector2 to)
     {
         var directionX = to.x > transform.position.x ? 1f : -1f;
-        RigidBody2D.velocity = CheckGround(directionX) || !CanAttack()
+        RigidBody2D.velocity = CanMove(to)
             ? new Vector2(directionX * moveSpeed, RigidBody2D.velocity.y) 
             : Vector2.zero;
         FlipSprite();
     }
 
-    private bool CheckGround(float directionX)
+    private bool CheckGround(Vector2 to)
     {
+        var directionX = to.x > transform.position.x ? 1f : -1f;
         var position = transform.position;
         var colliderBoundsSize = CapsuleCollider2D.bounds.size;
         var checkPosition = new Vector2(
