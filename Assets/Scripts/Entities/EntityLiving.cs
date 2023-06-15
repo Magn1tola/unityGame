@@ -6,12 +6,14 @@ public abstract class EntityLiving : Entity, IEntityDamageable, IEntityHealable
 {
     [SerializeField] protected float attackDistance = 1f;
     [SerializeField] protected float damage = 1f;
-    [SerializeField] private float maxHealth = 3;
+    [SerializeField] protected float maxHealth = 3f;
 
-    private float _health;
+    public float _health { get; private set; }
 
     public CapsuleCollider2D CapsuleCollider2D { get; private set; }
     public Animator Animator { get; private set; }
+    
+    public float MaxHealth { get => maxHealth; }
 
     public virtual void Damage(float damage, GameObject damager)
     {
