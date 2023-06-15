@@ -13,7 +13,7 @@ public class EntityPlayer : EntityLiving
 
     protected override void OnUpdate()
     {
-        Animator.SetBool(IsFallingAnimation, !IsGrounded());
+        // TODO: Animator.SetBool(IsFallingAnimation, !IsGrounded());
 
         if (Input.GetKeyDown(KeyCode.Space)) Animator.SetTrigger(AttackAnimation);
     }

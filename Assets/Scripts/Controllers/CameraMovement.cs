@@ -4,13 +4,7 @@ public class CameraMovement : MonoBehaviour
 {
     [SerializeField] private GameObject target;
 
-    [SerializeField] private Vector2 bounds = new(5f, 5f);
-
-    private void Start()
-    {
-        if (!target)
-            target = GameObject.FindGameObjectWithTag("Player");
-    }
+    [SerializeField] private Vector2 bounds = new(3f, 5f);
 
     private void LateUpdate()
     {
@@ -33,6 +27,6 @@ public class CameraMovement : MonoBehaviour
                 delta.y = deltaY + bounds.y;
         }
 
-        transform.position += new Vector3(delta.x, delta.y, 0);
+        transform.position += new Vector3(delta.x, delta.y);
     }
 }
