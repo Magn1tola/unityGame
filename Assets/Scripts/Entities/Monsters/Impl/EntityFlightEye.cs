@@ -29,18 +29,14 @@ public class EntityFlightEye : EntityMonster
 
         if (CanAttack()) TryAttack();
         Move(targetPosition);
+        _cooldown -= Time.deltaTime;
     }
 
     protected override void TryAttack()
     {
-        if (_cooldown <= 0)
-        {
-            UnityEngine.Debug.Log("!ATTACK!");
-            Attack();
-            _cooldown = cooldown;
-        }
-
-        _cooldown -= Time.deltaTime;
+        if (_cooldown > 0) return;
+        _cooldown = cooldown;
+        Attack();
     }
 
     public override void Attack()

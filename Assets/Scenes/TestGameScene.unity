@@ -224,6 +224,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlightEye
       objectReference: {fileID: 0}
+    - target: {fileID: 3078244849361274184, guid: 958591203be2c5b49b6b199aa1b89bff, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5293206545366111759, guid: 958591203be2c5b49b6b199aa1b89bff, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -11066,7 +11070,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2083737056}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
