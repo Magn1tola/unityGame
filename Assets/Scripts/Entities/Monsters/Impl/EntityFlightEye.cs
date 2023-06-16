@@ -6,6 +6,7 @@ public class EntityFlightEye : EntityMonster
     private static readonly int DamageAnimation = Animator.StringToHash("Damage");
     private static readonly int DeadAnimation = Animator.StringToHash("Dead");
 
+    [SerializeField] private GameObject rockPrefab;
     [SerializeField] private float maxLeftXOffset;
     [SerializeField] private float maxRightXOffset;
     [SerializeField] private float cooldown = 1.5f;
@@ -40,6 +41,15 @@ public class EntityFlightEye : EntityMonster
         }
 
         _cooldown -= Time.deltaTime;
+    }
+
+    public override void Attack()
+    {
+        var rock = Instantiate(
+            rockPrefab,
+            transform.position,
+            new Quaternion(0, 0, 0, 0)).GetComponent<EntityFallingRock>();
+        rock.damage = damage;
     }
 
     protected override bool CanMove(Vector2 to) => true;

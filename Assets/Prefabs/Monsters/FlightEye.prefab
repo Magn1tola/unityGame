@@ -35,7 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2088481908141472547
 SpriteRenderer:
@@ -122,7 +122,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62f75db882048ec4ca1fa9e0995439a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabs: []
+  prefabs:
+  - {fileID: 6811527710512792118, guid: 286d75f047a768941bf53fa4ecda8b31, type: 3}
+  - {fileID: 6811527710512792118, guid: 286d75f047a768941bf53fa4ecda8b31, type: 3}
 --- !u!70 &6352934849739041778
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -184,7 +186,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 6
 --- !u!114 &8321995430171354598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,5 +204,7 @@ MonoBehaviour:
   maxHealth: 3
   moveSpeed: 5
   minDistanceToLook: 0
+  rockPrefab: {fileID: 2413006636043309427, guid: 56526ed115d073a4893ff6f6db8a26bd, type: 3}
   maxLeftXOffset: 10
   maxRightXOffset: 10
+  cooldown: 1
