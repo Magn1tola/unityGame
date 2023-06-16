@@ -3,10 +3,12 @@
 public class MovementController : MonoBehaviour
 {
     private const float MaxMoveSpeed = 10f;
-    private static readonly int WalkSpeedAnimation = Animator.StringToHash("walkSpeed");
 
-    private static readonly int WalkAnimation = Animator.StringToHash("isWalking");
-    private static readonly int JumpAnimation = Animator.StringToHash("isJumping");
+    private static readonly int WalkSpeedAnimation = Animator.StringToHash("walkSpeed");
+    private static readonly int IsWalkingAnimation = Animator.StringToHash("isWalking");
+    private static readonly int JumpAnimation = Animator.StringToHash("Jump");
+
+    public static bool BlockInput;
 
     [SerializeField] [Range(1f, MaxMoveSpeed)]
     private float moveSpeed = 6;
@@ -16,12 +18,12 @@ public class MovementController : MonoBehaviour
     [SerializeField] private float dashLenght = 5;
     [SerializeField] private float dashSpeed = 1;
     [SerializeField] private GameObject dashEffect;
-    
+
     private Animator _animator;
     private Collider2D _collider2D;
+    private float _dashCooldown;
     private EntityPlayer _player;
     private Rigidbody2D _rigidbody2D;
-    private float dashCurrentCooldown;
 
     private Vector3 dashPosition;
     private bool isDashing;
@@ -36,13 +38,13 @@ public class MovementController : MonoBehaviour
 
     private void Update()
     {
+        if (BlockInput) return;
+
         if (Input.GetKeyDown(KeyCode.W) && _player.IsGrounded())
         {
-            _animator.SetBool(JumpAnimation, true);
+            _animator.SetTrigger(JumpAnimation);
             _rigidbody2D.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
         }
-
-        if (_player.IsGrounded()) _animator.SetBool(JumpAnimation, false);
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing) DashStart();
 
@@ -51,6 +53,8 @@ public class MovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (BlockInput) return;
+
         Move();
         Dashing();
     }
@@ -65,48 +69,49 @@ public class MovementController : MonoBehaviour
             var velocity = _rigidbody2D.velocity;
             _rigidbody2D.velocity = new Vector2(moveX * moveSpeed, velocity.y);
 
-            _animator.SetBool(WalkAnimation, true);
+            _animator.SetBool(IsWalkingAnimation, true);
 
             _player.FlipSprite();
         }
-        else _animator.SetBool(WalkAnimation, false);
+        else _animator.SetBool(IsWalkingAnimation, false);
     }
 
     private void CalculateDashCooldown(float value)
     {
-        if (dashCurrentCooldown - value < 0)
-            dashCurrentCooldown = 0;
-        else dashCurrentCooldown -= value;
+        if (_dashCooldown - value < 0)
+            _dashCooldown = 0;
+        else _dashCooldown -= value;
     }
 
     private void DashStart()
     {
-        if (isDashing || dashCurrentCooldown > 0) return;
+        if (isDashing || _dashCooldown > 0 || _rigidbody2D.velocity.x == 0) return;
         isDashing = true;
         dashPosition = CalculateDashPosition();
-        
+
+        var position = transform.position;
         var effectPosition = new Vector3(
-            (transform.position.x + dashPosition.x) / 2,
-            transform.position.y - 0.5f,
+            (position.x + dashPosition.x) / 2,
+            position.y - 0.5f,
             0
-            );
-        var effectRotation = (dashPosition.x > transform.position.x)
+        );
+
+        var effectRotation = dashPosition.x > position.x
             ? new Quaternion(0, 0, 0, 0)
-            : new Quaternion(0, 0, 180, 0); 
-        
+            : new Quaternion(0, 0, 180, 0);
+
         Instantiate(dashEffect, effectPosition, effectRotation);
-        
     }
 
     private void Dashing()
     {
-        if (!isDashing || dashCurrentCooldown > 0)
+        if (!isDashing || _dashCooldown > 0)
         {
             isDashing = false;
             return;
         }
 
-        dashCurrentCooldown -= Time.deltaTime;
+        _dashCooldown -= Time.deltaTime;
         transform.position = Vector3.MoveTowards(
             transform.position,
             dashPosition,
@@ -118,7 +123,7 @@ public class MovementController : MonoBehaviour
     private void DashEnd()
     {
         isDashing = false;
-        dashCurrentCooldown = dashCooldown;
+        _dashCooldown = dashCooldown;
     }
 
     private Vector3 CalculateDashPosition()

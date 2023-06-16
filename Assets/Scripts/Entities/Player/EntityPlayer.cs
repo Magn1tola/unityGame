@@ -3,19 +3,19 @@ using UnityEngine.SceneManagement;
 
 public class EntityPlayer : EntityLiving
 {
-    private static readonly int IsFallingAnimation = Animator.StringToHash("isFalling");
+    private static readonly int FallAnimation = Animator.StringToHash("Fall");
     private static readonly int AttackAnimation = Animator.StringToHash("Attack");
+
     private static readonly int DamageAnimation = Animator.StringToHash("TakeHit");
     private static readonly int DeathAnimation = Animator.StringToHash("Dead");
-
 
     public readonly PlayerData Data = new();
 
     protected override void OnUpdate()
     {
-        // TODO: Animator.SetBool(IsFallingAnimation, !IsGrounded());
+        if (!IsGrounded()) Animator.SetTrigger(FallAnimation);
 
-        if (Input.GetKeyDown(KeyCode.Space)) Animator.SetTrigger(AttackAnimation);
+        if (Input.GetKeyDown(KeyCode.Space) && !MovementController.BlockInput) Animator.SetTrigger(AttackAnimation);
     }
 
     public override void Damage(float damage, GameObject damager)
