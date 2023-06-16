@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8791634389747316553}
   - component: {fileID: 8747732223710274008}
   - component: {fileID: -3285300179179790332}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FallingRock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 2
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2

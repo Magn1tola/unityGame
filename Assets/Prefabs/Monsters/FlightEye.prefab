@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6352934849739041778}
   - component: {fileID: 7885860074795189149}
   - component: {fileID: 8321995430171354598}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FlightEye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,7 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2088481908141472547
 SpriteRenderer:
@@ -207,4 +207,4 @@ MonoBehaviour:
   rockPrefab: {fileID: 2413006636043309427, guid: 56526ed115d073a4893ff6f6db8a26bd, type: 3}
   maxLeftXOffset: 10
   maxRightXOffset: 10
-  cooldown: 1
+  cooldown: 3

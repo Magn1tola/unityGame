@@ -17,7 +17,6 @@ public class MovementController : MonoBehaviour
     [SerializeField] private float dashCooldown = 3;
     [SerializeField] private float dashLenght = 5;
     [SerializeField] private float dashSpeed = 1;
-    [SerializeField] private GameObject dashEffect;
 
     private Animator _animator;
     private Collider2D _collider2D;
@@ -100,7 +99,7 @@ public class MovementController : MonoBehaviour
             ? new Quaternion(0, 0, 0, 0)
             : new Quaternion(0, 0, 180, 0);
 
-        Instantiate(dashEffect, effectPosition, effectRotation);
+        Instantiate(Resources.Load<GameObject>("DashEffect"), effectPosition, effectRotation);
     }
 
     private void Dashing()

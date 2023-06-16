@@ -77,11 +77,8 @@ public class EntityFlightEye : EntityMonster
     public override void Dead()
     {
         Animator.StopPlayback();
-
-        base.Dead();
-
         Animator.SetTrigger(DeadAnimation);
 
-        Destroy(gameObject, 2f);
+        base.Dead();
     }
 }

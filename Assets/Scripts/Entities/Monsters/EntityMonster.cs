@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(DropItems))]
@@ -55,5 +56,17 @@ public abstract class EntityMonster : EntityLiving
     {
         base.Dead();
         _dropItems.Drop();
+        StartCoroutine(preDestroy());
+    }
+
+    private IEnumerator preDestroy()
+    {
+        yield return new WaitForSeconds(2f);
+        Instantiate(
+            Resources.Load<GameObject>("DestroyEffect"),
+            transform.position,
+            new Quaternion(0, 0, 0, 0)
+        );
+        Destroy(gameObject);
     }
 }
