@@ -526,6 +526,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3433499474041147978, guid: 2f870fe3afc57514dae98a216a3a114d, type: 3}
+      propertyPath: dashEffect
+      value: 
+      objectReference: {fileID: 6086919755587966702, guid: 3a7b81893b15c3c43b9e94cb38e8f1f1, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

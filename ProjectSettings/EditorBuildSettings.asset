@@ -7,5 +7,11 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/GameScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    guid: faf3eb3bbc25b5946b705af6eed073df
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 0982802e1d1ab404386c5d0b46153219
+  - enabled: 1
+    path: Assets/Scenes/ExitScene.unity
+    guid: 67a91a423ada07b4983f7ca31e830a59
   m_configObjects: {}
