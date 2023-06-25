@@ -6,17 +6,19 @@ public class EntityGoblin : EntityMonster
     private static readonly int DamageAnimation = Animator.StringToHash("Damage");
     private static readonly int DeadAnimation = Animator.StringToHash("Dead");
     private static readonly int AttackAnimation = Animator.StringToHash("Attack");
-    
+
     [SerializeField] private float cooldown = 1.5f;
     [SerializeField] private float attackCooldown = 0.5f;
     [SerializeField] private float dashCooldown = 1;
     [SerializeField] private float dashSpeed = 0.1f;
-    
-    private Vector3 dashPosition;
-    private bool isDashing;
     private int attackCounter;
     private float currentCooldown;
-    
+
+    private Vector3 dashPosition;
+    private bool isDashing;
+
+    private void FixedUpdate() => Dashing();
+
     protected override void OnUpdate()
     {
         if (!IsPlayerVisible() || !IsAlive())
@@ -24,10 +26,10 @@ public class EntityGoblin : EntityMonster
             attackCounter = 0;
             return;
         }
-        
+
         currentCooldown -= Time.deltaTime;
         Animator.SetFloat(SpeedAnimation, Mathf.Abs(RigidBody2D.velocity.x));
-        
+
         if (currentCooldown > 0) return;
         switch (attackCounter)
         {
@@ -38,15 +40,16 @@ public class EntityGoblin : EntityMonster
                     Move(_player.transform.position);
                     break;
                 }
+
                 currentCooldown = attackCooldown;
                 attackCounter++;
                 break;
-            
+
             case 1:
                 if (CanAttack() && !isDashing) DashStart();
                 else attackCounter = 0;
                 break;
-            
+
             case 2:
                 if (CanAttack()) TryAttack();
                 else
@@ -54,14 +57,12 @@ public class EntityGoblin : EntityMonster
                     attackCounter = 0;
                     break;
                 }
+
                 currentCooldown = cooldown;
                 attackCounter = 0;
                 break;
         }
-        
     }
-
-    private void FixedUpdate() => Dashing();
 
     protected override void TryAttack()
     {
@@ -75,18 +76,18 @@ public class EntityGoblin : EntityMonster
         Animator.SetTrigger(DamageAnimation);
     }
 
-    public override void Dead()
+    protected override void Dead()
     {
         Animator.StopPlayback();
         Animator.SetTrigger(DeadAnimation);
-        
+
         base.Dead();
     }
 
     public override void FlipSprite()
     {
         if (Vector2.Distance(_player.transform.position, transform.position) < minDistanceToLook)
-            SpriteRenderer.flipX = ((_player.transform.position - transform.position).x < 0);
+            SpriteRenderer.flipX = (_player.transform.position - transform.position).x < 0;
         else
             base.FlipSprite();
     }
@@ -126,13 +127,13 @@ public class EntityGoblin : EntityMonster
         var endPosition = new Vector2(
             playerPosition.x + attackDistance * 0.8f * directionX,
             startPosition.y
-            );
-        
+        );
+
         var raycastHit2D = Physics2D.Linecast(
-            startPosition, 
+            startPosition,
             endPosition,
             LayerMask.GetMask("Ground")
-            );
+        );
 
         if (raycastHit2D.collider)
             endPosition.x = raycastHit2D.point.x;

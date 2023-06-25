@@ -52,7 +52,12 @@ public class MovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (BlockInput) return;
+        if (BlockInput)
+        {
+            _animator.SetBool(IsWalkingAnimation, false);
+
+            return;
+        }
 
         Move();
         Dashing();
@@ -63,11 +68,12 @@ public class MovementController : MonoBehaviour
         _animator.SetFloat(WalkSpeedAnimation, moveSpeed / MaxMoveSpeed);
 
         var moveX = Input.GetAxis("Horizontal");
+
+        var velocity = _rigidbody2D.velocity;
+        _rigidbody2D.velocity = new Vector2(moveX * moveSpeed, velocity.y);
+
         if (moveX != 0)
         {
-            var velocity = _rigidbody2D.velocity;
-            _rigidbody2D.velocity = new Vector2(moveX * moveSpeed, velocity.y);
-
             _animator.SetBool(IsWalkingAnimation, true);
 
             _player.FlipSprite();
@@ -77,8 +83,7 @@ public class MovementController : MonoBehaviour
 
     private void CalculateDashCooldown(float value)
     {
-        if (_dashCooldown - value < 0)
-            _dashCooldown = 0;
+        if (_dashCooldown - value < 0) _dashCooldown = 0;
         else _dashCooldown -= value;
     }
 

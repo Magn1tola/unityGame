@@ -1,11 +1,10 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HealBar : MonoBehaviour
 {
-    private Slider _slider;
     private EntityPlayer _player;
+    private Slider _slider;
 
     private void Start()
     {
@@ -13,8 +12,5 @@ public class HealBar : MonoBehaviour
         _player = FindObjectOfType<EntityPlayer>();
     }
 
-    private void Update()
-    {
-        _slider.value = _player._health / _player.MaxHealth;
-    }
+    private void Update() => _slider.value = _player.Health / _player.MaxHealth;
 }

@@ -40,7 +40,7 @@ public class EntitySkeleton : EntityMonster
         Animator.SetTrigger(DamageAnimation);
     }
 
-    public override void Dead()
+    protected override void Dead()
     {
         Animator.StopPlayback();
         Animator.SetTrigger(DeadAnimation);

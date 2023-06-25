@@ -24,7 +24,7 @@ public class EntityPlayer : EntityLiving
         base.Damage(damage, damager);
     }
 
-    public override void Dead()
+    protected override void Dead()
     {
         base.Dead();
         Animator.SetTrigger(DeathAnimation);

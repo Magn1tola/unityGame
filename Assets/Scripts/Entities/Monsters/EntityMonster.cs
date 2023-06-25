@@ -6,9 +6,9 @@ public abstract class EntityMonster : EntityLiving
 {
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected float minDistanceToLook;
+    private DropItems _dropItems;
 
     protected EntityPlayer _player;
-    private DropItems _dropItems;
 
 
     protected override void Init()
@@ -21,17 +21,19 @@ public abstract class EntityMonster : EntityLiving
 
     protected abstract void TryAttack();
 
-    protected virtual bool CanAttack() => Vector2.Distance(_player.transform.position, transform.position) <= attackDistance;
+    protected virtual bool CanAttack() =>
+        Vector2.Distance(_player.transform.position, transform.position) <= attackDistance;
 
-    protected bool IsPlayerVisible() => Vector2.Distance(_player.transform.position, transform.position) <= minDistanceToLook;
+    protected bool IsPlayerVisible() =>
+        Vector2.Distance(_player.transform.position, transform.position) <= minDistanceToLook;
 
     protected virtual bool CanMove(Vector2 to) => CheckGround(to) && !CanAttack();
-    
+
     protected virtual void Move(Vector2 to)
     {
         var directionX = to.x > transform.position.x ? 1f : -1f;
         RigidBody2D.velocity = CanMove(to)
-            ? new Vector2(directionX * moveSpeed, RigidBody2D.velocity.y) 
+            ? new Vector2(directionX * moveSpeed, RigidBody2D.velocity.y)
             : Vector2.zero;
         FlipSprite();
     }
@@ -49,10 +51,10 @@ public abstract class EntityMonster : EntityLiving
             Vector2.down,
             1f,
             LayerMask.GetMask("Ground"));
-        return (raycastHit2D.collider);
+        return raycastHit2D.collider;
     }
-    
-    public override void Dead()
+
+    protected override void Dead()
     {
         base.Dead();
         _dropItems.Drop();

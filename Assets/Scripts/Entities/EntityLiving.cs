@@ -8,12 +8,12 @@ public abstract class EntityLiving : Entity, IEntityDamageable, IEntityHealable
     [SerializeField] protected float damage = 1f;
     [SerializeField] protected float maxHealth = 3f;
 
-    public float _health { get; private set; }
+    public float MaxHealth => maxHealth;
+    public float Health { get; private set; }
 
     public CapsuleCollider2D CapsuleCollider2D { get; private set; }
+
     public Animator Animator { get; private set; }
-    
-    public float MaxHealth { get => maxHealth; }
 
     public virtual void Damage(float damage, GameObject damager)
     {
@@ -24,15 +24,15 @@ public abstract class EntityLiving : Entity, IEntityDamageable, IEntityHealable
         var direction = damager.transform.position.x > gameObject.transform.position.x ? -1f : 1f;
         RigidBody2D.AddForce(transform.right * (direction * 2f) + transform.up * 5f, ForceMode2D.Impulse);
 
-        _health -= damage;
+        Health -= damage;
 
-        if (_health <= 0) Dead();
+        if (Health <= 0) Dead();
     }
 
     public void Heal(float health)
     {
-        if (_health + health > maxHealth) _health = maxHealth;
-        else _health += health;
+        if (Health + health > maxHealth) Health = maxHealth;
+        else Health += health;
     }
 
     protected override void Init()
@@ -40,7 +40,7 @@ public abstract class EntityLiving : Entity, IEntityDamageable, IEntityHealable
         CapsuleCollider2D = GetComponent<CapsuleCollider2D>();
         Animator = GetComponent<Animator>();
 
-        _health = maxHealth;
+        Health = maxHealth;
     }
 
     public virtual void Attack()
@@ -67,14 +67,11 @@ public abstract class EntityLiving : Entity, IEntityDamageable, IEntityHealable
             if (hit.collider.gameObject == gameObject) continue;
 
             if (hit.collider.gameObject.TryGetComponent(out IEntityDamageable damageable))
-            {
-                if (hit.collider is BoxCollider2D && damageable is EntityPlayer) continue;
                 damageable.Damage(damage, gameObject);
-            }
         }
     }
 
-    protected bool IsAlive() => _health > 0;
+    protected bool IsAlive() => Health > 0;
 
-    public virtual void Dead() => UnityEngine.Debug.Log("Dead");
+    protected virtual void Dead() => UnityEngine.Debug.Log("Dead");
 }

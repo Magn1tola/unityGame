@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class ShopController : MonoBehaviour
 {
     private static readonly int GlowLettersAnimation = Animator.StringToHash("isGlowLetters");
@@ -8,15 +9,25 @@ public class ShopController : MonoBehaviour
 
     private Animator _animator;
 
+    private EntityPlayer _player;
+
     private bool _staying;
 
-    private void Awake() => _animator = GetComponent<Animator>();
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();
+        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<EntityPlayer>();
+    }
 
     private void Update()
     {
         if (_staying)
         {
-            if (Input.GetKeyDown(KeyCode.S)) menu.Show();
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                menu.Show();
+                _player.RigidBody2D.velocity = new Vector2(0, _player.RigidBody2D.velocity.y);
+            }
             else if (Input.GetKeyDown(KeyCode.Escape)) menu.Hide();
         }
     }

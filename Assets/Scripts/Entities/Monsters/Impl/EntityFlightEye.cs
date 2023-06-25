@@ -63,10 +63,8 @@ public class EntityFlightEye : EntityMonster
             : new Vector2(startPosition.x - maxLeftXOffset, startPosition.y);
     }
 
-    protected override bool CanAttack()
-    {
-        return Math.Abs(_player.transform.position.x - transform.position.x) < attackDistance;
-    }
+    protected override bool CanAttack() =>
+        Math.Abs(_player.transform.position.x - transform.position.x) < attackDistance;
 
     public override void Damage(float damage, GameObject damager)
     {
@@ -74,7 +72,7 @@ public class EntityFlightEye : EntityMonster
         Animator.SetTrigger(DamageAnimation);
     }
 
-    public override void Dead()
+    protected override void Dead()
     {
         Animator.StopPlayback();
         Animator.SetTrigger(DeadAnimation);
