@@ -52,14 +52,10 @@ public class MovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (BlockInput)
-        {
-            _animator.SetBool(IsWalkingAnimation, false);
-
-            return;
-        }
-
         Move();
+
+        if (BlockInput) return;
+
         Dashing();
     }
 
@@ -68,6 +64,7 @@ public class MovementController : MonoBehaviour
         _animator.SetFloat(WalkSpeedAnimation, moveSpeed / MaxMoveSpeed);
 
         var moveX = Input.GetAxis("Horizontal");
+        if (BlockInput) moveX = 0;
 
         var velocity = _rigidbody2D.velocity;
         _rigidbody2D.velocity = new Vector2(moveX * moveSpeed, velocity.y);
