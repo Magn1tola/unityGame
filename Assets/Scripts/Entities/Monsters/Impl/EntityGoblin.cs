@@ -27,16 +27,14 @@ public class EntityGoblin : EntityMonster
 
         Animator.SetFloat(SpeedAnimation, Mathf.Abs(RigidBody2D.velocity.x));
 
+        Move(_player.transform.position);
+        
         if (currentCooldown > 0) return;
         switch (attackCounter)
         {
             case 0:
                 if (CanAttack()) TryAttack();
-                else
-                {
-                    Move(_player.transform.position);
-                    break;
-                }
+                
 
                 currentCooldown = attackCooldown;
                 attackCounter++;

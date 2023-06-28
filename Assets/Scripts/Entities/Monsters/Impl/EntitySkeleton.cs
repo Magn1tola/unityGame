@@ -16,8 +16,9 @@ public class EntitySkeleton : EntityMonster
         if (!IsPlayerVisible() || !IsAlive()) return;
 
         if (CanAttack()) TryAttack();
-        else Move(_player.transform.position);
 
+        Move(_player.transform.position);
+        
         Animator.SetFloat(SpeedAnimation, Mathf.Abs(RigidBody2D.velocity.x));
     }
 
