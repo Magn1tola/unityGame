@@ -18,9 +18,7 @@ public abstract class EntityMonster : EntityLiving
         _player = FindObjectOfType<EntityPlayer>();
         _dropItems = GetComponent<DropItems>();
     }
-
-    protected abstract void TryAttack();
-
+    
     protected virtual bool CanAttack() =>
         Vector2.Distance(_player.transform.position, transform.position) <= attackDistance;
 

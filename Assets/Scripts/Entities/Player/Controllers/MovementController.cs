@@ -86,7 +86,8 @@ public class MovementController : MonoBehaviour
 
     private void DashStart()
     {
-        if (isDashing || _dashCooldown > 0 || _rigidbody2D.velocity.x == 0) return;
+        if (isDashing || _dashCooldown > 0 || _rigidbody2D.velocity.x == 0 || !_player.CheckStamina(10f)) return;
+        _player.UseStamina(10f);
         isDashing = true;
         dashPosition = CalculateDashPosition();
 

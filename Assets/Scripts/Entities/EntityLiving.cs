@@ -43,6 +43,8 @@ public abstract class EntityLiving : Entity, IEntityDamageable, IEntityHealable
         Health = maxHealth;
     }
 
+    protected abstract void TryAttack();
+
     public virtual void Attack()
     {
         if (!IsAlive()) return;

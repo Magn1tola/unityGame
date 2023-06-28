@@ -35,7 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6893557064851353724
 SpriteRenderer:
@@ -187,6 +187,7 @@ MonoBehaviour:
   attackDistance: 1
   damage: 1
   maxHealth: 5
+  maxStamina: 30
 --- !u!114 &3433499474041147978
 MonoBehaviour:
   m_ObjectHideFlags: 0
