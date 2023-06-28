@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class EntityGoblin : EntityMonster
@@ -7,17 +8,12 @@ public class EntityGoblin : EntityMonster
     private static readonly int DeadAnimation = Animator.StringToHash("Dead");
     private static readonly int AttackAnimation = Animator.StringToHash("Attack");
 
-    [SerializeField] private float cooldown = 1.5f;
     [SerializeField] private float attackCooldown = 0.5f;
-    [SerializeField] private float dashCooldown = 1;
-    [SerializeField] private float dashSpeed = 0.1f;
+    [SerializeField] private float teleportCooldown = 1;
+    [SerializeField] private float teleportTime = 1;
+
     private int attackCounter;
     private float currentCooldown;
-
-    private Vector3 dashPosition;
-    private bool isDashing;
-
-    private void FixedUpdate() => Dashing();
 
     protected override void OnUpdate()
     {
@@ -28,6 +24,7 @@ public class EntityGoblin : EntityMonster
         }
 
         currentCooldown -= Time.deltaTime;
+
         Animator.SetFloat(SpeedAnimation, Mathf.Abs(RigidBody2D.velocity.x));
 
         if (currentCooldown > 0) return;
@@ -46,19 +43,7 @@ public class EntityGoblin : EntityMonster
                 break;
 
             case 1:
-                if (CanAttack() && !isDashing) DashStart();
-                else attackCounter = 0;
-                break;
-
-            case 2:
-                if (CanAttack()) TryAttack();
-                else
-                {
-                    attackCounter = 0;
-                    break;
-                }
-
-                currentCooldown = cooldown;
+                if (CanAttack()) StartCoroutine(Teleportation());
                 attackCounter = 0;
                 break;
         }
@@ -92,45 +77,40 @@ public class EntityGoblin : EntityMonster
             base.FlipSprite();
     }
 
-    private void DashStart()
+    private IEnumerator Teleportation()
     {
-        if (isDashing) return;
-        isDashing = true;
-        dashPosition = CalculateDashPosition();
+        BeginTeleportation();
+        yield return new WaitForSeconds(teleportTime);
+        EndTeleportation();
     }
 
-    private void Dashing()
+    private void BeginTeleportation()
     {
-        if (!isDashing) return;
-
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            dashPosition,
-            dashSpeed
-        );
-        FlipSprite();
-        if (transform.position == dashPosition) DashEnd();
+        Instantiate(Resources.Load<GameObject>("DestroyEffect"), transform.position, new Quaternion(0, 0, 0, 0));
+        transform.position = Vector3.zero;
+        RigidBody2D.simulated = false;
     }
 
-    private void DashEnd()
+    private void EndTeleportation()
     {
-        isDashing = false;
-        currentCooldown = dashCooldown;
-        attackCounter++;
+        RigidBody2D.simulated = true;
+        transform.position = CalculateTeleportPosition();
+        Instantiate(Resources.Load<GameObject>("DestroyEffect"), transform.position, new Quaternion(0, 0, 0, 0));
+        currentCooldown = teleportCooldown;
     }
 
-    private Vector3 CalculateDashPosition()
+    private Vector3 CalculateTeleportPosition()
     {
         var playerPosition = _player.transform.position;
-        var startPosition = transform.position;
-        var directionX = (playerPosition - startPosition).normalized.x;
+        var directionX = Random.value < 0.5f ? 1f : -1f;
+        if (directionX == 0) directionX = 1;
         var endPosition = new Vector2(
             playerPosition.x + attackDistance * 0.8f * directionX,
-            startPosition.y
+            playerPosition.y
         );
 
         var raycastHit2D = Physics2D.Linecast(
-            startPosition,
+            playerPosition,
             endPosition,
             LayerMask.GetMask("Ground")
         );
@@ -140,7 +120,7 @@ public class EntityGoblin : EntityMonster
 
         return new Vector3(
             endPosition.x + CapsuleCollider2D.bounds.size.x / 2 * directionX,
-            startPosition.y,
+            playerPosition.y,
             0
         );
     }

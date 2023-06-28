@@ -58,10 +58,10 @@ public abstract class EntityMonster : EntityLiving
     {
         base.Dead();
         _dropItems.Drop();
-        StartCoroutine(preDestroy());
+        StartCoroutine(PreDestroy());
     }
 
-    private IEnumerator preDestroy()
+    private IEnumerator PreDestroy()
     {
         yield return new WaitForSeconds(2f);
         Instantiate(
