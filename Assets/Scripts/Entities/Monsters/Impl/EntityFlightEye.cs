@@ -12,14 +12,14 @@ public class EntityFlightEye : EntityMonster
     [SerializeField] private float cooldown = 1.5f;
     private float _cooldown;
 
-    private Vector3 startPosition;
-    private Vector3 targetPosition;
+    private Vector3 _startPosition;
+    private Vector3 _targetPosition;
 
     protected override void Init()
     {
         base.Init();
 
-        startPosition = transform.position;
+        _startPosition = transform.position;
         CalculateTargetPosition();
     }
 
@@ -28,7 +28,7 @@ public class EntityFlightEye : EntityMonster
         if (!IsAlive()) return;
 
         if (CanAttack()) TryAttack();
-        Move(targetPosition);
+        Move(_targetPosition);
         _cooldown -= Time.deltaTime;
     }
 
@@ -53,14 +53,14 @@ public class EntityFlightEye : EntityMonster
     protected override void Move(Vector2 to)
     {
         base.Move(to);
-        if (Math.Abs(transform.position.x - targetPosition.x) < 0.1f) CalculateTargetPosition();
+        if (Math.Abs(transform.position.x - _targetPosition.x) < 0.1f) CalculateTargetPosition();
     }
 
     private void CalculateTargetPosition()
     {
-        targetPosition = transform.position.x < startPosition.x
-            ? new Vector2(startPosition.x + maxRightXOffset, startPosition.y)
-            : new Vector2(startPosition.x - maxLeftXOffset, startPosition.y);
+        _targetPosition = transform.position.x < _startPosition.x
+            ? new Vector2(_startPosition.x + maxRightXOffset, _startPosition.y)
+            : new Vector2(_startPosition.x - maxLeftXOffset, _startPosition.y);
     }
 
     protected override bool CanAttack() =>
