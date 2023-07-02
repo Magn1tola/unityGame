@@ -14,5 +14,5 @@ public class EntityFallingRock : EntityItem
         }
     }
 
-    protected override void OnCollide(EntityPlayer player) => player.Damage(damage, gameObject);
+    protected override void OnCollide(EntityPlayer player) => player.TakeDamage(damage, gameObject);
 }

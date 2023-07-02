@@ -66,9 +66,9 @@ public class EntityFlightEye : EntityMonster
     protected override bool CanAttack() =>
         Math.Abs(_player.transform.position.x - transform.position.x) < attackDistance;
 
-    public override void Damage(float damage, GameObject damager)
+    public override void TakeDamage(float damage, GameObject damager)
     {
-        base.Damage(damage, damager);
+        base.TakeDamage(damage, damager);
         Animator.SetTrigger(DamageAnimation);
     }
 

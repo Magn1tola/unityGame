@@ -16,7 +16,7 @@ public class EntityChest : EntityItem, IEntityDamageable
         _animator = GetComponent<Animator>();
     }
 
-    public void Damage(float damage, GameObject damager)
+    public void TakeDamage(float damage, GameObject damager)
     {
         if (_isOpened || !damager.GetComponent<EntityPlayer>()) return;
 

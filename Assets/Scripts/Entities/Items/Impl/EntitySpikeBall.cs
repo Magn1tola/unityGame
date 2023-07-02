@@ -7,6 +7,6 @@ public class EntitySpikeBall : EntityItem
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.TryGetComponent(out EntityLiving entityLiving))
-            entityLiving.Damage(damage, gameObject);
+            entityLiving.TakeDamage(damage, gameObject);
     }
 }

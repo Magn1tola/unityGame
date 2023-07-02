@@ -2,30 +2,30 @@
 
 public class MovementController : MonoBehaviour
 {
-    private const float MaxMoveSpeed = 10f;
-
     private static readonly int WalkSpeedAnimation = Animator.StringToHash("walkSpeed");
     private static readonly int IsWalkingAnimation = Animator.StringToHash("isWalking");
     private static readonly int JumpAnimation = Animator.StringToHash("Jump");
 
     public static bool BlockInput;
 
-    [SerializeField] [Range(1f, MaxMoveSpeed)]
-    private float moveSpeed = 6;
-
+    [SerializeField] private float baseMoveSpeed = 6;
     [SerializeField] private float jumpHeight = 5;
+    
+    [Header("Dash")]
     [SerializeField] private float dashCooldown = 3;
     [SerializeField] private float dashLenght = 5;
     [SerializeField] private float dashSpeed = 1;
 
     private Animator _animator;
     private Collider2D _collider2D;
-    private float _dashCooldown;
-    private EntityPlayer _player;
     private Rigidbody2D _rigidbody2D;
+    private EntityPlayer _player;
 
-    private Vector3 dashPosition;
-    private bool isDashing;
+    private float _dashCooldown;
+    private Vector3 _dashPosition;
+    private bool _isDashing;
+
+    private float MoveSpeed => baseMoveSpeed + _player.Data.MoveSpeedLvl.LvlIncrease;
 
     public void Start()
     {
@@ -45,7 +45,7 @@ public class MovementController : MonoBehaviour
             _rigidbody2D.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing) DashStart();
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !_isDashing) DashStart();
 
         CalculateDashCooldown(Time.deltaTime);
     }
@@ -61,13 +61,13 @@ public class MovementController : MonoBehaviour
 
     private void Move()
     {
-        _animator.SetFloat(WalkSpeedAnimation, moveSpeed / MaxMoveSpeed);
+        _animator.SetFloat(WalkSpeedAnimation, MoveSpeed / _player.Data.MoveSpeedLvl.MaxLvlIncrease);
 
         var moveX = Input.GetAxis("Horizontal");
         if (BlockInput) moveX = 0;
 
         var velocity = _rigidbody2D.velocity;
-        _rigidbody2D.velocity = new Vector2(moveX * moveSpeed, velocity.y);
+        _rigidbody2D.velocity = new Vector2(moveX * baseMoveSpeed, velocity.y);
 
         if (moveX != 0)
         {
@@ -75,7 +75,10 @@ public class MovementController : MonoBehaviour
 
             _player.FlipSprite();
         }
-        else _animator.SetBool(IsWalkingAnimation, false);
+        else
+        {
+            _animator.SetBool(IsWalkingAnimation, false);
+        }
     }
 
     private void CalculateDashCooldown(float value)
@@ -86,19 +89,19 @@ public class MovementController : MonoBehaviour
 
     private void DashStart()
     {
-        if (isDashing || _dashCooldown > 0 || _rigidbody2D.velocity.x == 0 || !_player.CheckStamina(10f)) return;
-        _player.UseStamina(10f);
-        isDashing = true;
-        dashPosition = CalculateDashPosition();
+        if (_isDashing || _dashCooldown > 0 || _rigidbody2D.velocity.x == 0 || !_player.CheckStamina(10f)) return;
+        _player.UseStamina(_player.StaminaForDash);
+        _isDashing = true;
+        _dashPosition = CalculateDashPosition();
 
         var position = transform.position;
         var effectPosition = new Vector3(
-            (position.x + dashPosition.x) / 2,
+            (position.x + _dashPosition.x) / 2,
             position.y - 0.5f,
             0
         );
 
-        var effectRotation = dashPosition.x > position.x
+        var effectRotation = _dashPosition.x > position.x
             ? new Quaternion(0, 0, 0, 0)
             : new Quaternion(0, 0, 180, 0);
 
@@ -107,24 +110,24 @@ public class MovementController : MonoBehaviour
 
     private void Dashing()
     {
-        if (!isDashing || _dashCooldown > 0)
+        if (!_isDashing || _dashCooldown > 0)
         {
-            isDashing = false;
+            _isDashing = false;
             return;
         }
 
         _dashCooldown -= Time.deltaTime;
         transform.position = Vector3.MoveTowards(
             transform.position,
-            dashPosition,
+            _dashPosition,
             dashSpeed
         );
-        if (transform.position == dashPosition) DashEnd();
+        if (transform.position == _dashPosition) DashEnd();
     }
 
     private void DashEnd()
     {
-        isDashing = false;
+        _isDashing = false;
         _dashCooldown = dashCooldown;
     }
 

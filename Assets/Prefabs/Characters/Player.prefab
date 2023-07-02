@@ -184,10 +184,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ccaec645be547b8b97f4be19abfeb16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDistance: 1
-  damage: 1
   maxHealth: 5
-  maxStamina: 30
+  attackDistance: 2
+  damage: 1
+  baseMaxStamina: 20
+  baseStaminaRecoveryRate: 2
+  staminaForAttack: 3
+  staminaForDash: 5
 --- !u!114 &3433499474041147978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,7 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 029852ed23f449269e03d23c820b2a28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  baseMoveSpeed: 6
   jumpHeight: 5
   dashCooldown: 3
   dashLenght: 5

@@ -8,18 +8,25 @@ public class EntityPlayer : EntityLiving
     private static readonly int DamageAnimation = Animator.StringToHash("TakeHit");
     private static readonly int DeathAnimation = Animator.StringToHash("Dead");
 
+    [Header("Stamina")]
+    [SerializeField] private float baseMaxStamina = 20;
+    [SerializeField] private float baseStaminaRecoveryRate = 2;
+    [SerializeField] private float staminaForAttack = 3f;
+    [SerializeField] private float staminaForDash = 5f;
+    
     public readonly PlayerData Data = new();
 
-    [SerializeField] private float maxStamina = 20;
-    private float stamina;
-    
-    public float Stamina => stamina;
-    public float MaxStamina => maxStamina;
+    public float Stamina { get; private set; }
 
+    public new float MaxHealth => maxHealth + Data.MaxHpLvl.LvlIncrease;
+    private float Damage => damage + Data.StrengthLvl.LvlIncrease;
+    public float MaxStamina => baseMaxStamina + Data.StaminaLvl.LvlIncrease;
+
+    public float StaminaForDash => staminaForDash;
     protected override void Init()
     {
         base.Init();
-        stamina = maxStamina;
+        Stamina = MaxStamina;
     }
 
     protected override void OnUpdate()
@@ -27,24 +34,29 @@ public class EntityPlayer : EntityLiving
         if (!IsGrounded()) Animator.SetTrigger(FallAnimation);
 
         if (Input.GetKeyDown(KeyCode.Space) && !MovementController.BlockInput) TryAttack();
-        
+
         CalculateStamina();
     }
 
     private void CalculateStamina()
     {
-        if (stamina < maxStamina)
-            stamina += Time.deltaTime;
+        if (Stamina < MaxStamina)
+            Stamina += Time.deltaTime * baseStaminaRecoveryRate;
+        if (Stamina > MaxStamina)
+            Stamina = MaxStamina;
     }
 
     public void UseStamina(float value)
     {
-        stamina -= value;
-        if (stamina < 0) stamina = 0;
+        Stamina -= value;
+        if (Stamina < 0) Stamina = 0;
     }
 
-    public bool CheckStamina(float value) => stamina - value >= 0;
-    
+    public bool CheckStamina(float value)
+    {
+        return Stamina - value >= 0;
+    }
+
     protected override void TryAttack()
     {
         if (!IsAlive() || !CheckStamina(5f)) return;
@@ -53,15 +65,27 @@ public class EntityPlayer : EntityLiving
 
     public override void Attack()
     {
-        base.Attack();
-        UseStamina(5f);
+        UseStamina(staminaForAttack);
+        if (!IsAlive()) return;
+
+        var raycastHits2D = GetHitsAtAttackDistance();
+
+        foreach (var hit in raycastHits2D)
+        {
+            if (hit.collider.gameObject == gameObject) continue;
+
+            if (hit.collider.gameObject.TryGetComponent(out IEntityDamageable damageable))
+                damageable.TakeDamage(Damage, gameObject);
+        }
     }
-    
-    public override void Damage(float damage, GameObject damager)
+
+    public override void TakeDamage(float damage, GameObject damager)
     {
         Animator.SetTrigger(DamageAnimation);
-        base.Damage(damage, damager);
+        base.TakeDamage(damage, damager);
     }
+
+    public override void Heal(float health) => Health = (Health + health > MaxHealth) ? MaxHealth : Health + health;
 
     protected override void Dead()
     {

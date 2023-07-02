@@ -34,9 +34,9 @@ public class EntitySkeleton : EntityMonster
         _cooldown -= Time.deltaTime;
     }
 
-    public override void Damage(float damage, GameObject damager)
+    public override void TakeDamage(float damage, GameObject damager)
     {
-        base.Damage(damage, damager);
+        base.TakeDamage(damage, damager);
 
         Animator.SetTrigger(DamageAnimation);
     }

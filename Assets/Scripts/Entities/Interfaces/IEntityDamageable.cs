@@ -2,5 +2,5 @@ using UnityEngine;
 
 internal interface IEntityDamageable
 {
-    void Damage(float damage, GameObject damager);
+    void TakeDamage(float damage, GameObject damager);
 }
