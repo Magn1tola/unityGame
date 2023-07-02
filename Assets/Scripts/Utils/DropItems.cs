@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class DropItems : MonoBehaviour
 {
@@ -15,6 +16,16 @@ public class DropItems : MonoBehaviour
 
     private bool _isDropped;
     private float _x;
+
+    private void Start()
+    {
+        for (var i = 0; i < prefabs.Length; i++)
+        {
+            var item = Instantiate(prefabs[i], transform.position, new Quaternion(0, 0, 0, 0));
+            item.SetActive(false);
+            _items.Add(item);
+        }
+    }
 
     private void Update()
     {
@@ -61,11 +72,11 @@ public class DropItems : MonoBehaviour
         if (_isDropped) return;
 
         _isDropped = true;
-        for (var i = 0; i < prefabs.Length; i++)
+
+        for (var i = 0; i < _items.Count; i++)
         {
-            var item = Instantiate(prefabs[i], transform.position, new Quaternion(0, 0, 0, 0));
-            _items.Add(item);
             _targetPositions.Add(CalculateItemTargetPosition(i));
+            _items[i].SetActive(true);
         }
     }
 }

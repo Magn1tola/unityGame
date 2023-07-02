@@ -8,11 +8,11 @@ public class EntityChest : EntityItem, IEntityDamageable
 
     private bool _isOpened;
 
-    private DropItems _items;
+    private DropItems _dropItems;
 
     private void Awake()
     {
-        _items = GetComponent<DropItems>();
+        _dropItems = GetComponent<DropItems>();
         _animator = GetComponent<Animator>();
     }
 
@@ -23,6 +23,6 @@ public class EntityChest : EntityItem, IEntityDamageable
         _isOpened = true;
         _animator.SetBool(IsOpenedAnimation, _isOpened);
 
-        _items.Drop();
+        _dropItems.Drop();
     }
 }
