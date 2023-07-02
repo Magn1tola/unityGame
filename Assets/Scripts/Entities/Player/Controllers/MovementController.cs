@@ -20,7 +20,8 @@ public class MovementController : MonoBehaviour
     private Collider2D _collider2D;
     private Rigidbody2D _rigidbody2D;
     private EntityPlayer _player;
-
+    private EffectController _dashEffect;
+    
     private float _dashCooldown;
     private Vector3 _dashPosition;
     private bool _isDashing;
@@ -33,6 +34,8 @@ public class MovementController : MonoBehaviour
         _rigidbody2D = _player.RigidBody2D;
         _animator = _player.Animator;
         _collider2D = _player.CapsuleCollider2D;
+        _dashEffect = Instantiate(Resources.Load<GameObject>("DashEffect")).GetComponent<EffectController>();
+        _dashEffect.DisableEffect();
     }
 
     private void Update()
@@ -102,10 +105,12 @@ public class MovementController : MonoBehaviour
         );
 
         var effectRotation = _dashPosition.x > position.x
-            ? new Quaternion(0, 0, 0, 0)
-            : new Quaternion(0, 0, 180, 0);
+            ? new Quaternion(0, 0, 180, 0)
+            : new Quaternion(0, 0, 0, 0);
 
-        Instantiate(Resources.Load<GameObject>("DashEffect"), effectPosition, effectRotation);
+        _dashEffect.transform.position = effectPosition;
+        _dashEffect.transform.rotation = effectRotation;
+        _dashEffect.EnableEffect();
     }
 
     private void Dashing()

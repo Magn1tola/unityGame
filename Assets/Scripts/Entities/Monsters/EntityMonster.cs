@@ -10,13 +10,16 @@ public abstract class EntityMonster : EntityLiving
 
     protected EntityPlayer _player;
 
-
+    private EffectController _deadEffect;
+    
     protected override void Init()
     {
         base.Init();
 
         _player = FindObjectOfType<EntityPlayer>();
         _dropItems = GetComponent<DropItems>();
+        _deadEffect = Instantiate(Resources.Load<GameObject>("DestroyEffect")).GetComponent<EffectController>();
+        _deadEffect.DisableEffect();
     }
     
     protected virtual bool CanAttack() =>
@@ -62,11 +65,8 @@ public abstract class EntityMonster : EntityLiving
     private IEnumerator PreDestroy()
     {
         yield return new WaitForSeconds(2f);
-        Instantiate(
-            Resources.Load<GameObject>("DestroyEffect"),
-            transform.position,
-            new Quaternion(0, 0, 0, 0)
-        );
+        _deadEffect.transform.position = transform.position;
+        _deadEffect.EnableEffect();
         Destroy(gameObject);
     }
 }

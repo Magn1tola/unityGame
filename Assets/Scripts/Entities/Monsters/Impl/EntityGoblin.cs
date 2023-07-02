@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EntityGoblin : EntityMonster
 {
@@ -12,44 +14,52 @@ public class EntityGoblin : EntityMonster
     [SerializeField] private float teleportCooldown = 1;
     [SerializeField] private float teleportTime = 1;
 
-    private int attackCounter;
-    private float currentCooldown;
+    private EffectController _teleportEffect;
+    
+    private int _attackCounter;
+    private float _currentCooldown;
+
+    protected override void Init()
+    {
+        base.Init();
+
+        _teleportEffect = Instantiate(Resources.Load<GameObject>("TeleportEffect")).GetComponent<EffectController>();
+        _teleportEffect.DisableEffect();
+    }
 
     protected override void OnUpdate()
     {
         if (!IsPlayerVisible() || !IsAlive())
         {
-            attackCounter = 0;
+            _attackCounter = 0;
             return;
         }
 
-        currentCooldown -= Time.deltaTime;
+        _currentCooldown -= Time.deltaTime;
 
         Animator.SetFloat(SpeedAnimation, Mathf.Abs(RigidBody2D.velocity.x));
 
         Move(_player.transform.position);
         
-        if (currentCooldown > 0) return;
-        switch (attackCounter)
+        if (_currentCooldown > 0) return;
+        switch (_attackCounter)
         {
             case 0:
                 if (CanAttack()) TryAttack();
-                
-
-                currentCooldown = attackCooldown;
-                attackCounter++;
+                _currentCooldown = attackCooldown;
+                _attackCounter++;
                 break;
 
             case 1:
                 if (CanAttack()) StartCoroutine(Teleportation());
-                attackCounter = 0;
+                _attackCounter = 0;
                 break;
         }
     }
 
     protected override void TryAttack()
     {
-        currentCooldown = attackCooldown;
+        _currentCooldown = attackCooldown;
         Animator.SetTrigger(AttackAnimation);
     }
 
@@ -63,10 +73,12 @@ public class EntityGoblin : EntityMonster
     {
         Animator.StopPlayback();
         Animator.SetTrigger(DeadAnimation);
-
+        
+        _teleportEffect.DestroyEffect();
+        
         base.Dead();
     }
-
+    
     public override void FlipSprite()
     {
         if (Vector2.Distance(_player.transform.position, transform.position) < minDistanceToLook)
@@ -84,7 +96,8 @@ public class EntityGoblin : EntityMonster
 
     private void BeginTeleportation()
     {
-        Instantiate(Resources.Load<GameObject>("DestroyEffect"), transform.position, new Quaternion(0, 0, 0, 0));
+        _teleportEffect.transform.position = transform.position;
+        _teleportEffect.EnableEffect();
         transform.position = Vector3.zero;
         RigidBody2D.simulated = false;
     }
@@ -93,8 +106,9 @@ public class EntityGoblin : EntityMonster
     {
         RigidBody2D.simulated = true;
         transform.position = CalculateTeleportPosition();
-        Instantiate(Resources.Load<GameObject>("DestroyEffect"), transform.position, new Quaternion(0, 0, 0, 0));
-        currentCooldown = teleportCooldown;
+        _teleportEffect.transform.position = transform.position;
+        _teleportEffect.EnableEffect();
+        _currentCooldown = teleportCooldown;
     }
 
     private Vector3 CalculateTeleportPosition()
