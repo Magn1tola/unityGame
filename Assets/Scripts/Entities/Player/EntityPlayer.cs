@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class EntityPlayer : EntityLiving
 {
@@ -23,6 +23,8 @@ public class EntityPlayer : EntityLiving
     public float MaxStamina => baseMaxStamina + Data.StaminaLvl.LvlIncrease;
 
     public float StaminaForDash => staminaForDash;
+
+    public UnityEvent PlayerDead;
     protected override void Init()
     {
         base.Init();
@@ -91,6 +93,6 @@ public class EntityPlayer : EntityLiving
     {
         base.Dead();
         Animator.SetTrigger(DeathAnimation);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+        PlayerDead.Invoke();
     }
 }
