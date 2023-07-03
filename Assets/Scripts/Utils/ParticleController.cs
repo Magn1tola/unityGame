@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class EffectController : MonoBehaviour
+public class ParticleController : MonoBehaviour
 {
     private static readonly int PlayAnimation = Animator.StringToHash("Trigger");
     private Animator _animator;

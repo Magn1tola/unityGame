@@ -10,7 +10,7 @@ public abstract class EntityMonster : EntityLiving
 
     protected EntityPlayer _player;
 
-    private EffectController _deadEffect;
+    private ParticleController _deadParticle;
     
     protected override void Init()
     {
@@ -18,8 +18,8 @@ public abstract class EntityMonster : EntityLiving
 
         _player = FindObjectOfType<EntityPlayer>();
         _dropItems = GetComponent<DropItems>();
-        _deadEffect = Instantiate(Resources.Load<GameObject>("DestroyEffect")).GetComponent<EffectController>();
-        _deadEffect.DisableEffect();
+        _deadParticle = Instantiate(Resources.Load<GameObject>("DestroyEffect")).GetComponent<ParticleController>();
+        _deadParticle.DisableEffect();
     }
     
     protected virtual bool CanAttack() =>
@@ -65,8 +65,8 @@ public abstract class EntityMonster : EntityLiving
     private IEnumerator PreDestroy()
     {
         yield return new WaitForSeconds(2f);
-        _deadEffect.transform.position = transform.position;
-        _deadEffect.EnableEffect();
+        _deadParticle.transform.position = transform.position;
+        _deadParticle.EnableEffect();
         Destroy(gameObject);
     }
 }

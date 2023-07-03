@@ -14,7 +14,7 @@ public class EntityGoblin : EntityMonster
     [SerializeField] private float teleportCooldown = 1;
     [SerializeField] private float teleportTime = 1;
 
-    private EffectController _teleportEffect;
+    private ParticleController _teleportParticle;
     
     private int _attackCounter;
     private float _currentCooldown;
@@ -23,8 +23,8 @@ public class EntityGoblin : EntityMonster
     {
         base.Init();
 
-        _teleportEffect = Instantiate(Resources.Load<GameObject>("TeleportEffect")).GetComponent<EffectController>();
-        _teleportEffect.DisableEffect();
+        _teleportParticle = Instantiate(Resources.Load<GameObject>("TeleportEffect")).GetComponent<ParticleController>();
+        _teleportParticle.DisableEffect();
     }
 
     protected override void OnUpdate()
@@ -74,7 +74,7 @@ public class EntityGoblin : EntityMonster
         Animator.StopPlayback();
         Animator.SetTrigger(DeadAnimation);
         
-        _teleportEffect.DestroyEffect();
+        _teleportParticle.DestroyEffect();
         
         base.Dead();
     }
@@ -96,8 +96,8 @@ public class EntityGoblin : EntityMonster
 
     private void BeginTeleportation()
     {
-        _teleportEffect.transform.position = transform.position;
-        _teleportEffect.EnableEffect();
+        _teleportParticle.transform.position = transform.position;
+        _teleportParticle.EnableEffect();
         transform.position = Vector3.zero;
         RigidBody2D.simulated = false;
     }
@@ -106,8 +106,8 @@ public class EntityGoblin : EntityMonster
     {
         RigidBody2D.simulated = true;
         transform.position = CalculateTeleportPosition();
-        _teleportEffect.transform.position = transform.position;
-        _teleportEffect.EnableEffect();
+        _teleportParticle.transform.position = transform.position;
+        _teleportParticle.EnableEffect();
         _currentCooldown = teleportCooldown;
     }
 
