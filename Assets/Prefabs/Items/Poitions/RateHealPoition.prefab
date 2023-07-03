@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 3922676565114437859}
   - component: {fileID: 2772125060104021440}
   - component: {fileID: 7906242598287565416}
-  - component: {fileID: 1371908262836893181}
   - component: {fileID: 7867517128395214000}
+  - component: {fileID: 7168273787385703840}
   m_Layer: 8
-  m_Name: HealPoitionSmall
+  m_Name: RateHealPoition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -1835100335, guid: 921178ae1ec561a459e6fa1ccc512ec8, type: 3}
+  m_Sprite: {fileID: -1829799934, guid: 921178ae1ec561a459e6fa1ccc512ec8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -132,19 +132,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.24450207, y: 0.28456402}
   m_EdgeRadius: 0
---- !u!114 &1371908262836893181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4196120408092600110}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a516be0aef414ce6966e2db1b117e58c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  heal: 1
 --- !u!50 &7867517128395214000
 Rigidbody2D:
   serializedVersion: 4
@@ -172,3 +159,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &7168273787385703840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4196120408092600110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7cac26f17484271b18c6e7e3a15db46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

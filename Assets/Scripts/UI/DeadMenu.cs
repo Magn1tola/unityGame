@@ -10,7 +10,7 @@ public class DeadMenu : MonoBehaviour
      private void Awake()
      {
           _player = FindObjectOfType<EntityPlayer>();
-          _player.PlayerDead.AddListener(ActivateMenu);
+          _player.playerDead.AddListener(ActivateMenu);
      }
 
      private void Start() => menu.SetActive(false);

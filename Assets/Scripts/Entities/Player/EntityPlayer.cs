@@ -16,6 +16,8 @@ public class EntityPlayer : EntityLiving
     
     public readonly PlayerData Data = new();
 
+    public EffectsController effectsController;
+
     public float Stamina { get; private set; }
 
     public new float MaxHealth => maxHealth + Data.MaxHpLvl.LvlIncrease;
@@ -24,10 +26,13 @@ public class EntityPlayer : EntityLiving
 
     public float StaminaForDash => staminaForDash;
 
-    public UnityEvent PlayerDead;
+    public UnityEvent playerDead;
     protected override void Init()
     {
         base.Init();
+
+        effectsController = GetComponent<EffectsController>();
+        
         Stamina = MaxStamina;
     }
 
@@ -93,6 +98,6 @@ public class EntityPlayer : EntityLiving
     {
         base.Dead();
         Animator.SetTrigger(DeathAnimation);
-        PlayerDead.Invoke();
+        playerDead.Invoke();
     }
 }

@@ -1,11 +1,10 @@
 public abstract class EntityPotion : EntityItem
 {
+    protected EntityEffect Effect;
     protected override void OnCollide(EntityPlayer player)
     {
-        AddEffect(player);
+        player.effectsController.AddEffect(Effect);
 
         Destroy(gameObject);
     }
-
-    protected abstract void AddEffect(EntityPlayer player);
 }
