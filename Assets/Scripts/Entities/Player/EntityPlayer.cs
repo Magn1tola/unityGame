@@ -20,9 +20,9 @@ public class EntityPlayer : EntityLiving
 
     public float Stamina { get; private set; }
 
-    public new float MaxHealth => maxHealth + Data.MaxHpLvl.LvlIncrease;
-    private float Damage => damage + Data.StrengthLvl.LvlIncrease;
-    public float MaxStamina => baseMaxStamina + Data.StaminaLvl.LvlIncrease;
+    public new float MaxHealth => (maxHealth + Data.MaxHpLvl.LvlIncrease) * effectsController.maxHealthMultiple;
+    private float Damage => (damage + Data.StrengthLvl.LvlIncrease) * effectsController.damageAttackMultiple;
+    public float MaxStamina => (baseMaxStamina + Data.StaminaLvl.LvlIncrease) * effectsController.maxStaminaMultiple;
 
     public float StaminaForDash => staminaForDash;
 
@@ -88,15 +88,22 @@ public class EntityPlayer : EntityLiving
 
     public override void TakeDamage(float damage, GameObject damager)
     {
+        if (!IsAlive()) return;
         Animator.SetTrigger(DamageAnimation);
+        damage *= effectsController.damageTakeMultiple;
         base.TakeDamage(damage, damager);
     }
 
-    public override void Heal(float health) => Health = (Health + health > MaxHealth) ? MaxHealth : Health + health;
+    public override void Heal(float health)
+    {
+        if (!IsAlive()) return;
+        Health = (Health + health > MaxHealth) ? MaxHealth : Health + health;
+    }
 
     protected override void Dead()
     {
         base.Dead();
+        MovementController.BlockInput = true;
         Animator.SetTrigger(DeathAnimation);
         playerDead.Invoke();
     }

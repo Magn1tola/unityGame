@@ -17,10 +17,11 @@ public abstract class EntityRateEffect : EntityEffect
     {
         while (true)
         {
-            yield return new WaitForSeconds(_rate);
             if (_duration >= Duration) break;
+            yield return new WaitForSeconds(_rate);
             _duration += _rate;
             RateUpdate();
         }
+        RemoveEffect();
     }
 }
