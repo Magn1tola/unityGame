@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7867517128395214000}
   - component: {fileID: 8279745313828093287}
   m_Layer: 8
-  m_Name: InstantDeadlPoition
+  m_Name: InstantDeadlPotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7867517128395214000}
   - component: {fileID: 7168273787385703840}
   m_Layer: 8
-  m_Name: RateHealPoition
+  m_Name: RateHealPotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

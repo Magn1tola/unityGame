@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1371908262836893181}
   - component: {fileID: 7867517128395214000}
   m_Layer: 8
-  m_Name: InstantHealPoition
+  m_Name: InstantHealPotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -144,7 +144,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a516be0aef414ce6966e2db1b117e58c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heal: 1
 --- !u!50 &7867517128395214000
 Rigidbody2D:
   serializedVersion: 4

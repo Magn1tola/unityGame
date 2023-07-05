@@ -8,7 +8,7 @@ public class EffectsController : MonoBehaviour
     public float damageTakeMultiple = 1f;
     public float maxHealthMultiple = 1f;
     public float maxStaminaMultiple = 1f;
-    private readonly List<EntityEffect> _effects = new();
+    public readonly List<EntityEffect> Effects = new();
     private EntityPlayer _player;
 
     private void Awake()
@@ -18,11 +18,12 @@ public class EffectsController : MonoBehaviour
 
     public void AddEffect(EntityEffect effect)
     {
-        _effects.Add(effect);
+        if (Effects.Exists(item => item.GetType() == effect.GetType())) return;
+        Effects.Add(effect);
         effect.ApplyEffect(_player);
     }
 
-    public void RemoveEffect(EntityEffect effect) => _effects.Remove(effect);
+    public void RemoveEffect(EntityEffect effect) => Effects.Remove(effect);
 
     public void StartEffectRateUpdate(IEnumerator enumerator) => StartCoroutine(enumerator);
 }
