@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ParallaxController : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class ParallaxController : MonoBehaviour
         for (var i = 0; i < backgroundCount; i++)
         {
             var backgroundLayer = backgroundLayers[i];
-            _layersMaterial[i] = backgroundLayer.GetComponent<Renderer>().material;
+            _layersMaterial[i] = backgroundLayer.GetComponent<RawImage>().material;
 
             var diffZ = backgroundLayer.transform.position.z - _cameraTransform.position.z;
             if (diffZ > farthestBackground) farthestBackground = diffZ;
